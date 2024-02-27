@@ -4,11 +4,11 @@ function registerUser() {
             <form action=""></form>
             <h1></h1>
             <div>
-                <label htmlFor="name"></label>
+                <label htmlFor="name">Nome</label>
                 <input type="text" name="name" id="name" />
             </div>
             <div>
-                <label htmlFor="userName"></label>
+                <label htmlFor="userName">Nome de usuário</label>
                 <input type="text" name="userName" id="userName" />
             </div>
             <div>

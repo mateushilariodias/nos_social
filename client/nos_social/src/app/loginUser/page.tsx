@@ -1,5 +1,6 @@
 "use client";
 
+import AuthInput from "@/components/AuthInput";
 import AuthPage from "@/components/AuthPage";
 import axios from "axios";
 import Link from "next/link";
@@ -24,24 +25,8 @@ function LoginUser() {
     return (
         <AuthPage>
             <h1 className="font-bold text-2xl">Login de usuário</h1>
-            <div className="flex flex-col items-start justify-between">
-                <label htmlFor="emailUser">E-mail:</label>
-                <input
-                    type="email"
-                    name="emailUser"
-                    id="emailUser"
-                    onChange={(e) => setEmailUser(e.currentTarget.value)}
-                    className="py-2 px-3 border-gray-400 border-b w-full focus-visible:border-gray-600 focus-visible:border-b focus-visible:outline-none" />
-            </div>
-            <div className="flex flex-col items-start justify-between">
-                <label htmlFor="passwordUser">Senha:</label>
-                <input
-                    type="password"
-                    name="passwordUser"
-                    id="passwordUser"
-                    onChange={(e) => setPasswordUser(e.currentTarget.value)}
-                    className="py-2 px-3 border-gray-400 border-b w-full focus-visible:border-gray-600 focus-visible:border-b focus-visible:outline-none" />
-            </div>
+            <AuthInput newState={setEmailUser} htmlForAndNameAndId="emailUser" label="E-mail:" type="email"></AuthInput>
+            <AuthInput newState={setPasswordUser} htmlForAndNameAndId="passwordUser" label="Senha:" type="password"></AuthInput>
             <button className="bg-blue-600 hover:bg-blue-800 py-3 font-bold text-white rounded-lg" onClick={(e) => handleLoginUser(e)}>
                 <strong>Entrar</strong>
             </button>

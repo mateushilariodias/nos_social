@@ -1,29 +1,25 @@
+import AuthInput from "@/components/AuthInput";
 import AuthPage from "@/components/AuthPage";
+import { useState } from "react";
 
 function RegisterUser() {
+
+    const [fullName, setFullName] = useState("");
+    const [userName, setUserName] = useState("");
+    const [emailUser, setEmailUser] = useState("");
+    const [phoneNumberUser, setPhoneNumberUser] = useState("");
+    const [passwordUser, setPasswordUser] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
     return (
         <AuthPage>
-            <h1></h1>
-            <div>
-                <label htmlFor="name">Nome:</label>
-                <input type="text" name="name" id="name" />
-            </div>
-            <div>
-                <label htmlFor="userName">Nome de usuário:</label>
-                <input type="text" name="userName" id="userName" />
-            </div>
-            <div>
-                <label htmlFor="emailUser">E-mail:</label>
-                <input type="email" name="emailUser" id="emailUser" />
-            </div>
-            <div>
-                <label htmlFor="phoneNumberUser">Celular:</label>
-                <input type="tel" name="phoneNumberUser" id="phoneNumberUser" />
-            </div>
-            <div>
-                <label htmlFor="passwordUser">Senha:</label>
-                <input type="password" name="passwordUser" id="passwordUser" />
-            </div>
+            <h1 className="font-bold text-2xl">Cadastro de usuário</h1>
+            <AuthInput newState={setFullName} htmlForAndNameAndId="fullName" label="Nome:" type="text"></AuthInput>
+            <AuthInput newState={setUserName} htmlForAndNameAndId="userName" label="Nome de usuário:" type="text"></AuthInput>
+            <AuthInput newState={setEmailUser} htmlForAndNameAndId="emailUser" label="E-mail:" type="email"></AuthInput>
+            <AuthInput newState={setPhoneNumberUser} htmlForAndNameAndId="phoneNumberUser" label="Celular:" type="tel"></AuthInput>
+            <AuthInput newState={setPasswordUser} htmlForAndNameAndId="passwordUser" label="Senha:" type="password"></AuthInput>
+            <AuthInput newState={setConfirmPassword} htmlForAndNameAndId="confirmPassword" label="Confirme a senha:" type="password"></AuthInput>
         </AuthPage>
     );
 }

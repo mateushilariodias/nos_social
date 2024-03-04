@@ -4,11 +4,13 @@ import AuthInput from "@/components/AuthInput";
 import Link from "next/link";
 import { useState } from "react";
 import { makeRequest } from "../../../../axios";
+import { useRouter } from "next/navigation";
 
 function LoginUser() {
     const [emailUser, setEmailUser] = useState("");
     const [passwordUser, setPasswordUser] = useState("");
     const [error, setError] = useState("")
+    const router = useRouter()
 
     const handleLoginUser = (e: any) => {
         e.preventDefault();
@@ -18,6 +20,7 @@ function LoginUser() {
                 localStorage.setItem("nos-social: user", JSON.stringify(res.data.data.user))
                 localStorage.setItem("nos-social: token", JSON.stringify(res.data.data.token))
                 setError('');
+                router.push("/")
             })
             .catch((err) => {
                 console.log(err);

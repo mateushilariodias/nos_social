@@ -15,7 +15,8 @@ function LoginUser() {
         makeRequest
             .post('auth/loginUser', { emailUser, passwordUser })
             .then((res) => {
-                console.log(res.data);
+                localStorage.setItem("nos-social: user", JSON.stringify(res.data.data.user))
+                localStorage.setItem("nos-social: token", JSON.stringify(res.data.data.token))
                 setError('');
             })
             .catch((err) => {

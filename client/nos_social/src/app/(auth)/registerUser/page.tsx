@@ -1,10 +1,9 @@
 "use client";
 
 import AuthInput from "@/components/AuthInput";
-import AuthPage from "@/components/AuthPage";
 import Link from "next/link";
 import { useState } from "react";
-import { makeRequest } from "../../../axios";
+import { makeRequest } from "../../../../axios";
 
 function RegisterUser() {
 
@@ -34,7 +33,7 @@ function RegisterUser() {
     };
 
     return (
-        <AuthPage>
+        <>
             <h1 className="font-bold text-2xl">Cadastro de usuário</h1>
             <AuthInput newState={setFullName} htmlForAndNameAndId="fullName" label="Nome:" type="text"></AuthInput>
             <AuthInput newState={setUserName} htmlForAndNameAndId="userName" label="Nome de usuário:" type="text"></AuthInput>
@@ -51,7 +50,7 @@ function RegisterUser() {
                 <Link href="/loginUser"><span className="text-left underline">Logar</span></Link>
                 <Link href="/resetUserPassword"><span className="text-right underline">Redefinir senha</span></Link>
             </div>
-        </AuthPage>
+        </>
     );
 }
 export default RegisterUser;

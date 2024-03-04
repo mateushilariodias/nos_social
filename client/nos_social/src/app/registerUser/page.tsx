@@ -2,9 +2,9 @@
 
 import AuthInput from "@/components/AuthInput";
 import AuthPage from "@/components/AuthPage";
-import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
+import { makeRequest } from "../../../axios";
 
 function RegisterUser() {
 
@@ -14,16 +14,22 @@ function RegisterUser() {
     const [phoneNumberUser, setPhoneNumberUser] = useState("");
     const [passwordUser, setPasswordUser] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState("")
+    const [success, setSuccess] = useState("")
 
     const handleRegisterUser = (e: any) => {
         e.preventDefault();
-        axios
-            .post('http://localhost:8001/api/auth/register', { fullName, userName, emailUser, phoneNumberUser, passwordUser, confirmPassword })
+        makeRequest
+            .post('auth/registerUser', { fullName, userName, emailUser, phoneNumberUser, passwordUser, confirmPassword })
             .then((res) => {
                 console.log(res.data);
+                setSuccess(res.data.msg)
+                setError('')
             })
             .catch((err) => {
                 console.log(err);
+                setError(err.response.data.msg)
+                setSuccess('')
             });
     };
 
@@ -36,6 +42,8 @@ function RegisterUser() {
             <AuthInput newState={setPhoneNumberUser} htmlForAndNameAndId="phoneNumberUser" label="Celular:" type="tel"></AuthInput>
             <AuthInput newState={setPasswordUser} htmlForAndNameAndId="passwordUser" label="Senha:" type="password"></AuthInput>
             <AuthInput newState={setConfirmPassword} htmlForAndNameAndId="confirmPassword" label="Confirme a senha:" type="password"></AuthInput>
+            {error.length > 0 && <span className="text-red-600">* {error}</span>}
+            {success.length > 0 && <span className="text-green-600">* {success}</span>}
             <button className="bg-blue-600 hover:bg-blue-800 py-3 font-bold text-white rounded-lg" onClick={(e) => handleRegisterUser(e)}>
                 <strong>Cadastrar-se</strong>
             </button>

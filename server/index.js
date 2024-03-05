@@ -1,7 +1,10 @@
 import express from "express";
+import userRouter from "./routes/user.js"
 
 const app = express();
 
-app.listen(8001, () => {
-    console.log("Servidor rodando na porta 8001!");
+app.use("/api/users/", userRouter); //configurando rota principal dos users
+
+app.listen(8000, () => {
+    console.log("Servidor rodando na porta 8000!");
 });

@@ -32,10 +32,10 @@ function Header() {
             </div>
             <div className="flex gap-5 items-center text-gray-600">
                 <div className="flex gap-3">
-                    <button className="bg-zinc-100 hover:bg-zinc-200 p-2 rounded-full">
+                    <button type="button" title="Pesquisar" className="bg-zinc-100 hover:bg-zinc-200 p-2 rounded-full">
                         <TbMessageCircle2Filled />
                     </button>
-                    <button className="bg-zinc-100 hover:bg-zinc-200 p-2 rounded-full">
+                    <button type="button" title="Notificações" className="bg-zinc-100 hover:bg-zinc-200 p-2 rounded-full">
                         <FaBell />
                     </button>
                 </div>

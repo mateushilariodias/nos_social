@@ -1,4 +1,4 @@
-import { db } from "../connect";
+import { db } from "../connect.js";
 import bycrypt from "bcrypt";
 export const register = (req, res)=>{
     const { username, email, password, confirmPassword} = req.body;
@@ -16,7 +16,7 @@ export const register = (req, res)=>{
         return res.status(422).json({msg:"As senhas não são iguais."});
     }
 
-    db.query("SELECT email FROM user WHERE email = ?"[email], async(error, data)=>{
+    db.query("SELECT email FROM user WHERE email = ?", [email], async(error, data)=>{
         if(error){
             console.log(error);
             return res.status(500).json({msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!"});

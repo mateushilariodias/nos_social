@@ -17,7 +17,6 @@ export const register = async (req, res) => {
         return res.status(422).json({ msg: "O email é obrigatório!" });
     }
 
-
     // Verifica se a senha está presente na requisição
     if (!password) {
         return res.status(422).json({ msg: "A senha é obrigatória!" });

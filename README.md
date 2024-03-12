@@ -1,3 +1,9 @@
 # nos_social
 
-npm i = Instala modulos do node
+npm init
+
+npm i
+
+npm install react-icons --save
+
+npm install react-social-icons

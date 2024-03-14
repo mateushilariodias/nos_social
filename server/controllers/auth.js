@@ -1,6 +1,6 @@
 // Importa a instância do banco de dados e a biblioteca bcrypt para hash de senhas
 import { db } from "../connect.js";
-import bcrypt from "bcrypt";
+// import bcrypt from "bcrypt";
 
 // Função para registrar um novo usuário
 export const register = async (req, res) => {

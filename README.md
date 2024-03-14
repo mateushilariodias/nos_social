@@ -25,3 +25,5 @@ npm start
 npm checkout -b teste01
 
 git checkout back-end
+
+git branch -D teste01

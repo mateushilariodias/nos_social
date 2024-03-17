@@ -1,5 +1,6 @@
 "use client";
 
+import Feed from "@/components/Feed";
 import Header from "@/components/HeaderFeed";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -18,6 +19,7 @@ function FeedUser() {
     return (
         <main className="flex min-h-screen flex-col items-center justify-between bg-zinc-100">
             <Header />
+            <Feed />
         </main>
     )
 }

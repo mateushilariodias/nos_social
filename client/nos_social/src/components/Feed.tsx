@@ -2,16 +2,16 @@ import Post from "./Post";
 
 const posts = [{
     id:1,
-    album: 'Album',
-    title: 'Title',
-    postDescription: 'Description',
+    profilePicture: 'https://media.licdn.com/dms/image/D4D03AQHB3q7Dgd0o7w/profile-displayphoto-shrink_200_200/0/1699232180763?e=1716422400&v=beta&t=OQoAAoZzqcm-DJeOHPc3w36hHTo93jlTldFOQWqC-6s',
+    author: 'User01',
+    description: 'Description',
     image: ''
 }, {
     id:2,
-    album: 'Album',
-    title: 'Title',
-    postDescription: 'Description',
-    image: 'https://media.licdn.com/dms/image/D4D03AQHB3q7Dgd0o7w/profile-displayphoto-shrink_800_800/0/1699232180763?e=2147483647&v=beta&t=vYL0StOA58XWQGfmy0W_ijHan4wAkjSTiZQXLHBeUHg'
+    profilePicture: '',
+    author: 'User02',
+    description: 'Description',
+    image: 'https://th.bing.com/th/id/OIG3..Mntnk7M7LDYWo.V7ZFq?pid=ImgGn'
 }]
 
 function FeedMain() {

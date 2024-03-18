@@ -3,9 +3,9 @@ import { FaPaperPlane, FaRegComment, FaThumbsUp } from "react-icons/fa";
 
 interface IPost {
     id: number;
-    album: string;
-    title: string;
-    postDescription: string;
+    profilePicture: string;
+    author: string;
+    description: string;
     image: string
 }
 
@@ -16,7 +16,7 @@ interface IUser{
 
 function Post(props: { post: IPost }) {
 
-    const { album, title, postDescription, image } = props.post;
+    const { profilePicture, author, description, image } = props.post;
     const [user, setUser] = useState<IUser | undefined>(undefined);
 
     useEffect(() => {
@@ -29,17 +29,17 @@ function Post(props: { post: IPost }) {
     return (
         <div className="w-1/3 bg-white rounded-lg p-4 shadow-md">
             <header className="flex gap-2 pb-4 border-b items-center">
-                <span className="font-bold">{album}</span>
+                <img className="h-8 w-8 rounded-full" src={profilePicture?profilePicture:"https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Foto de perfil do criador da postagem" />
                 <div className="flex flex-col">
-                    <span className="font-semibold">{title}</span>
+                    <span className="font-semibold">{author}</span>
                     <span className="text-xs">25/03/2024</span>
                 </div>
             </header>
             <main>
-                {postDescription && (<div className="py-4 w-full">
-                    <span>{postDescription}</span>
+                {description && (<div className="py-4 w-full">
+                    <span>{description}</span>
                 </div>)}
-                {image && <img src={image} alt="Imagem do post" />}
+                {image && <img src={image} alt="Imagem da postagem" />}
             </main>
             <footer>
                 <div className="flex justify-between py-4 border-b">

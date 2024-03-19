@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/server/users/", userRouter); // Configurando rota principal dos usuários.
 app.use("/server/auth/", authRouter);   // Configurando rota principal da autenticação.
 
-// Inicialização do servidor na porta 3306.
-app.listen(3306, () => {
-    console.log("Servidor rodando na porta 3306!");
+// Inicialização do servidor na porta 3000.
+app.listen(3000, () => {
+    console.log("Servidor rodando na porta 3000!");
 });

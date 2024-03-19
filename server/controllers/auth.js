@@ -63,32 +63,45 @@ export const register = async (req, res) => {  // Define a função 'register' c
 
 // // Função para realizar o login (ainda não implementada)
 export const login = (req, res) => {  // Define a função 'login' que recebe req (requisição) e res (resposta)
-//     const { emailUser, passwordUser } = req.body;  // Extrai informações do corpo da requisição
+    const { emailUser, passwordUser } = req.body;  // Extrai informações do corpo da requisição
 
-//     db.query("SELECT * FROM user WHERE emailUser = ?", [emailUser], async (error, data) => {  // Consulta o banco de dados para obter informações do usuário
-//         if (error) {  // Verifica se ocorreu algum erro na consulta
-//             console.log(error);  // Loga o erro no console
-//             return res.status(500).json({ msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!" });  // Retorna erro 500 se ocorrer um erro no servidor
-//         }
+    db.query("SELECT * FROM user WHERE emailUser = ?", [emailUser], async (error, data) => {  // Consulta o banco de dados para obter informações do usuário
+        if (error) {  // Verifica se ocorreu algum erro na consulta
+            console.log(error);  // Loga o erro no console
+            return res.status(500).json({ msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!" });  // Retorna erro 500 se ocorrer um erro no servidor
+        }
         
-//         if (data.length == 0) {  // Verifica se o usuário não foi encontrado
-//             return res.status(404).json({ msg: "Usuário não encontrado!" });  // Retorna erro 404 se o usuário não for encontrado
-//         } else {
-//             const user = data[0];  // Obtém os dados do usuário
+        if (data.length == 0) {  // Verifica se o usuário não foi encontrado
+            return res.status(404).json({ msg: "Usuário não encontrado!" });  // Retorna erro 404 se o usuário não for encontrado
+        } else {
+            const user = data[0];  // Obtém os dados do usuário
 
-//             const checkPassword = await bcrypt.compare(passwordUser, user.passwordUser);  // Compara a senha enviada com a senha hashada no banco de dados
+            const checkPassword = await bcrypt.compare(passwordUser, user.passwordUser);  // Compara a senha enviada com a senha hashada no banco de dados
 
-//             if (!checkPassword) {  // Verifica se a senha está incorreta
-//                 return res.status(422).json({ msg: "Senha incorreta!" });  // Retorna erro 422 se a senha estiver incorreta
-//             }
+            if (!checkPassword) {  // Verifica se a senha está incorreta
+                return res.status(422).json({ msg: "Senha incorreta!" });  // Retorna erro 422 se a senha estiver incorreta
+            }
 
-//             try {
-//                 const refreshToken = jwt.sign({  // Gera um token JWT
-//                     exp: Math.floor(Date.now() / 1000) + 24 * 60 * 60,  // Define a expiração do token para 24 horas
-//                     id: user.passwordUser  // Define o ID do usuário no token
-//                 }, 'SEU_SECRET_KEY_AQUI');  // Chave secreta para assinar o token
-
-//                 // Parei em 1:10:26
-//         };
-//     });
+            try {
+                const refreshToken = jwt.sign({  // Gera um token JWT
+                    exp: Math.floor(Date.now() / 1000) + 24 * 60 * 60,  // Define a expiração do token para 24 horas
+                    id: user.passwordUser  // Define o ID do usuário no token
+                }, 
+                process.env.REFRESH,
+                {algorith: "HS256"}
+                );  // Chave secreta para assinar o refreshtoken
+                const token = jwt.sign({  // Gera um token JWT
+                    exp: Math.floor(Date.now() / 1000) + 3600,  // Define a expiração do token para 24 horas
+                    id: user.passwordUser  // Define o ID do usuário no token
+                }, 
+                process.env.REFRESH,
+                {algorith: "HS256"}
+                );  // Chave secreta para assinar o token
+                res.status(200).json({msg: "Usuário logado com sucesso!", token, refreshToken})
+            } catch(err){
+                console.log(err);
+                return res.status(500).json({msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!"})
+            };
+        };
+    });
 };

@@ -6,7 +6,8 @@ interface IPost {
     profilePicture: string;
     author: string;
     description: string;
-    image: string
+    image: string;
+    createdPost:string;
 }
 
 interface IUser{
@@ -16,7 +17,7 @@ interface IUser{
 
 function Post(props: { post: IPost }) {
 
-    const { profilePicture, author, description, image } = props.post;
+    const { profilePicture, author, description, image, createdPost } = props.post;
     const [user, setUser] = useState<IUser | undefined>(undefined);
 
     useEffect(() => {
@@ -26,13 +27,16 @@ function Post(props: { post: IPost }) {
         }
     }, [])
 
+    let date = new Date(createdPost)
+    let formatedDate = date.getDate() + "+" + (date.getMonth() + 1) + "/" + date.getFullYear();
+
     return (
         <div className="w-1/3 bg-white rounded-lg p-4 shadow-md">
             <header className="flex gap-2 pb-4 border-b items-center">
                 <img className="h-8 w-8 rounded-full" src={profilePicture?profilePicture:"https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Foto de perfil do criador da postagem" />
                 <div className="flex flex-col">
                     <span className="font-semibold">{author}</span>
-                    <span className="text-xs">25/03/2024</span>
+                    <span className="text-xs">{formatedDate}</span>
                 </div>
             </header>
             <main>

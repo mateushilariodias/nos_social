@@ -17,14 +17,13 @@ function LoginUser() {
         makeRequest
             .post('auth/loginUser', { emailUser, passwordUser })
             .then((res) => {
-                localStorage.setItem("nos-social: user", JSON.stringify(res.data.data.user))
-                localStorage.setItem("nos-social: token", JSON.stringify(res.data.data.token))
+                localStorage.setItem("nos-social: user", JSON.stringify(res.data.user))
                 setError('');
                 router.push("/")
             })
             .catch((err) => {
                 console.log(err);
-                setError(err.response.data.msg)
+                setError(err.response.msg)
             });
     };
 

@@ -1,27 +1,29 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaSearch, FaBell } from "react-icons/fa"
 import { TbMessageCircle2Filled } from "react-icons/tb"
+import { useMutation } from "@tanstack/react-query";
+import { makeRequest } from "../../axios";
+import { UserContext } from "@/context/userContext";
 
 function Header() {
 
-    const [user, setUser] = useState({ userName: '', userImg: '' })
+    const {user} = useContext(UserContext);
     const [showMenu, setShowMenu] = useState(false)
     const router = useRouter()
 
-    useEffect(() => {
-        let value = localStorage.getItem("nos-social: user")
-        if (value) {
-            setUser(JSON.parse(value));
-        }
-    }, [])
-
-    const logout = (e:any) => {
-        e.preventDefault();
-        localStorage.removeItem("nos-social:token");
-        router.push("/loginUser");
-    }
+    const mutation = useMutation({
+        mutationFn: async () => {
+            return await makeRequest. post( "auth/logout"). then ((res) => {
+                res.data;
+            });
+        },
+        onSuccess: () => {
+            localStorage.removeItem("nos-social: user");
+            router. push("/loginUser");
+        },
+    });
 
     return (
         <header className="w-full bg-white flex justify-between items-center py-4 px-72 shadow-sm">
@@ -41,13 +43,13 @@ function Header() {
                 </div> */}
                 <div className="relative" onMouseLeave={()=>setShowMenu(false)}>
                     <button className="flex gap-2 items-center" onClick={() => setShowMenu(!showMenu)}>
-                        <img className="w-8 h-8 rounded-full" src={user.userImg.length > 0 ? user.userImg : "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Imagem do perfil" />
-                        <span className="font-bold">{user.userName}</span>
+                        <img className="w-8 h-8 rounded-full" src={user?user.userImg : "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Imagem do perfil" />
+                        <span className="font-bold">{user?.userName}</span>
                     </button>
                     {showMenu && (
                         <div className="absolute flex flex-col bg-white p-4 shadow-md rounded-md gap-2 border-t whitespace-nowrap right-[-8px]">
                             <Link href="userConfiguration" className="border-b">Configurações do perfil</Link>
-                            <Link href="" onClick={(e)=>logout(e)}>Logout</Link>
+                            <Link href="" onClick={()=>mutation.mutate()}>Logout</Link>
                         </div>
                     )}
                 </div>

@@ -14,5 +14,10 @@ router.post("/register", register);
 // Definição da rota de login ("/login") que aceita requisições POST e chama a função login do controlador.
 router.post("/login", login);
 
+import { registerNgo } from "../controllers/auth.js";
+import { loginNgo } from "../controllers/auth.js";
+router.post("/registerNgo", registerNgo);
+router.post("/loginNgo", loginNgo);
+
 // Exportação do objeto Router para uso em outras partes do aplicativo.
 export default router;

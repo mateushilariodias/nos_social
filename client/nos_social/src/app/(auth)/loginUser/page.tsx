@@ -12,14 +12,15 @@ function LoginUser() {
     const [passwordUser, setPasswordUser] = useState("");
     const [error, setError] = useState("")
     const router = useRouter()
-    const setUser = useContext(UserContext)
+    const {setUser} = useContext(UserContext)
+
 
     const handleLoginUser = (e: any) => {
         e.preventDefault();
         makeRequest
             .post('auth/loginUser', { emailUser, passwordUser })
             .then((res) => {
-                localStorage.setItem("nos-social: user", JSON.stringify(res.data.user));
+                localStorage.setItem("nos-social:user", JSON.stringify(res.data.user));
                 setUser(res.data.user)
                 setError('');
                 router.push("/")

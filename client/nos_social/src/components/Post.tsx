@@ -21,7 +21,7 @@ function Post(props: { post: IPost }) {
     const [user, setUser] = useState<IUser | undefined>(undefined);
 
     useEffect(() => {
-        let value = localStorage.getItem("nos-social: user")
+        let value = localStorage.getItem("nos-social:user")
         if (value) {
             setUser(JSON.parse(value));
         }

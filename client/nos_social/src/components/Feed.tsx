@@ -3,7 +3,6 @@ import Post from "./Post";
 import { makeRequest } from "../../axios";
 import PostCreation from "./postCreation";
 import { useQuery } from "@tanstack/react-query";
-import { log } from "console";
 
 interface IPost {
     id: number;
@@ -44,7 +43,7 @@ function FeedMain() {
         <section className="w-full flex flex-col items-center gap-5">
             <PostCreation />
             {isLoading ? (<span>Carregando postagens...</span>) : (
-                <div className="w-full flex flex-col-reverse gap-5 items-center">
+                <div className="w-full flex flex-col gap-5 items-center">
                     {data?.map((post, id) => {
                         return <Post post={post} key={id} />
                     })}

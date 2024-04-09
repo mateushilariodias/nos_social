@@ -10,7 +10,7 @@ npm install react-icons --save
 
 npm install react-social-icons
 
-
+npm i moment
 
 git checkout back-end
 

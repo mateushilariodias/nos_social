@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { FaPaperPlane, FaRegComment, FaThumbsUp } from "react-icons/fa";
 import moment from "moment";
 import 'moment/locale/pt-br'
+import { useQuery } from "@tanstack/react-query";
+import { makeRequest } from "../../axios";
 
 interface IPost {
     id: number;
@@ -17,10 +19,21 @@ interface IUser{
     userImg:string;
 }
 
+interface IComment {
+    id: number;
+    comment: number;
+    userName:string;
+    userImg:string;
+    commentUserId: number;
+    postId: number
+    createdComment: string;
+}
+
 function Post(props: { post: IPost }) {
 
-    const { profilePicture, author, description, image, createdPost } = props.post;
+    const { id, profilePicture, author, description, image, createdPost } = props.post;
     const [user, setUser] = useState<IUser | undefined>(undefined);
+    const [comment, setComment] = useState('')
 
     useEffect(() => {
         let value = localStorage.getItem("nos-social:user")
@@ -28,6 +41,18 @@ function Post(props: { post: IPost }) {
             setUser(JSON.parse(value));
         }
     }, [])
+
+    const {data, error, isLoading} = useQuery<IComment[] | undefined>({
+        queryKey:['comments', id],
+        queryFn: () => makeRequest.get('comment/?post_id'+id).then((res) => {
+            return res.data.data
+        }),
+        enabled: !! id
+    })
+
+    if (error) {
+        console.log(error);
+    }
 
     return (
         <div className="w-1/3 bg-white rounded-lg p-4 shadow-md">
@@ -49,7 +74,7 @@ function Post(props: { post: IPost }) {
                     <div className="flex gap-1 items-center">
                         <span className="bg-blue-600 w-6 h-6 text-white flex items-center justify-center rounded-full text-xs"><FaThumbsUp /></span>4.561
                     </div>
-                    <span>875 comentários</span>
+                    <span>{data && data.length > 0 ? `${data?.length} comentários` : ""}</span>
                 </div>
                 <div className="flex justify-around py-4 text-gray-600 border-b">
                     <button className="flex items-center gap-1">
@@ -63,7 +88,7 @@ function Post(props: { post: IPost }) {
                     <img className="w-10 h-10 rounded-full" src={user?.userImg ? user.userImg : "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Imagem do perfil" />
                     <span className="font-bold">{user?.userName}</span>
                     <div className="w-full bg-zinc-100 flex items-center text-gray-600 px-3 py-1 rounded-full">
-                        <input type="text" name="comment" id="comment" className="bg-zinc-100 w-full focus-visible:outline-none " />
+                        <input type="text" name="comment" id="comment" placeholder="Comente sobre o trabalho" value={comment} onChange={(e) =>setComment(e.target.value)} className="bg-zinc-100 w-full focus-visible:outline-none " />
                         <FaPaperPlane />
                     </div>
                 </div>

@@ -43,7 +43,7 @@ function Post(props: { post: IPost }) {
                 {description && (<div className="py-4 w-full">
                     <span>{description}</span>
                 </div>)}
-                {image && <img src={image} alt="Imagem da postagem" />}
+                {image && <img src={`./upload/${image}`} alt="Imagem da postagem" />}
             </main>
             <footer>
                 <div className="flex justify-between py-4 border-b">

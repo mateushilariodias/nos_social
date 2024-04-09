@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaPaperPlane, FaRegComment, FaThumbsUp } from "react-icons/fa";
+import moment from "moment";
+import 'moment/locale/pt-br'
 
 interface IPost {
     id: number;
@@ -27,16 +29,13 @@ function Post(props: { post: IPost }) {
         }
     }, [])
 
-    let date = new Date(createdPost)
-    let formatedDate = date.getDate() + "+" + (date.getMonth() + 1) + "/" + date.getFullYear();
-
     return (
         <div className="w-1/3 bg-white rounded-lg p-4 shadow-md">
             <header className="flex gap-2 pb-4 border-b items-center">
                 <img className="h-8 w-8 rounded-full" src={profilePicture?profilePicture:"https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Foto de perfil do criador da postagem" />
                 <div className="flex flex-col">
                     <span className="font-semibold">{author}</span>
-                    <span className="text-xs">{formatedDate}</span>
+                    <span className="text-xs">{moment(createdPost).fromNow()}</span>
                 </div>
             </header>
             <main>

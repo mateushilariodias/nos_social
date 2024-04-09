@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import Post from "./Post";
 import { makeRequest } from "../../axios";
+import PostCreation from "./postCreation";
+import { useQuery } from "@tanstack/react-query";
+import { log } from "console";
 
 interface IPost {
     id: number;
@@ -8,7 +11,7 @@ interface IPost {
     author: string;
     description: string;
     image: string;
-    createdPost:string;
+    createdPost: string;
 }
 
 function FeedMain() {
@@ -23,13 +26,30 @@ function FeedMain() {
         })
     }, [])
 
+    const { data, isLoading, error } = useQuery<IPost[] | undefined>({
+        queryKey: ['posts'],
+        queryFn: () =>
+            makeRequest.get("post/").then((res) => {
+                return res.data.data
+            })
+    })
+
+    if (error) {
+        [
+            console.log(error)
+        ]
+    }
+
     return (
         <section className="w-full flex flex-col items-center gap-5">
-            {posts?.map((post, id) => {
-                return (
-                    <Post post={post} key={id} />
-                )
-            })}
+            <PostCreation />
+            {isLoading ? (<span>Carregando postagens...</span>) : (
+                <div className="w-full flex flex-col-reverse gap-5 items-center">
+                    {data?.map((post, id) => {
+                        return <Post post={post} key={id} />
+                    })}
+                </div>
+            )}
         </section>
     )
 }

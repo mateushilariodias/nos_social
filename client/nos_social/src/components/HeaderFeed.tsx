@@ -35,9 +35,9 @@ function Header() {
                 <FaSearch />
             </div>
             <div >
-                <button className="bg-blue-600 hover:bg-blue-800 py-3 px-6 font-bold text-white rounded-lg">
+                <Link  href="registerNGO" className="bg-blue-600 hover:bg-blue-800 py-3 px-6 font-bold text-white rounded-lg">
                     <strong>Cadastrar ONG</strong>
-                </button>
+                </Link>
             </div>
             <div className="flex gap-5 items-center text-gray-600">
                 {/* <div className="flex gap-3">
@@ -56,6 +56,7 @@ function Header() {
                     {showMenu && (
                         <div className="absolute flex flex-col bg-white p-4 shadow-md rounded-md gap-2 border-t whitespace-nowrap right-[-8px]">
                             <Link href="userConfiguration" className="border-b">Configurações do perfil</Link>
+                            <Link href="feedNGO" className="border-b">Entrar como ONG</Link>
                             <Link href="" onClick={() => mutation.mutate()}>Logout</Link>
                         </div>
                     )}

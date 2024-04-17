@@ -24,10 +24,15 @@ export const creatPost = (req, res) => {
     });
 };
 
-// Função para obter postagens (ainda não implementada)
 export const getPost = (req, res) => {
-    db.query("select p. * , u.userName, userImg from posts as p join user as u on (u.id = p.user_id);")
-    // Esta função será implementada para obter postagens do banco de dados
+    db.query("select p. * , u.userName, userImg from posts as p join user as u on (u.emailUser = p.user_id);")
+    if (error) {
+        console.log(error);
+        return res.status(500).json({ msg: "Aconteceu um erro no servidor, tente novamente mais tarde!"     
+    });
+    }else if (data) {
+        return res.status(200).json({ msg: "Post enviado com sucesso!" });
+    }
 };
 
-// faltando fazer a parte do banco de dados e ver a parte do ID
+

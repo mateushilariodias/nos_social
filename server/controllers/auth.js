@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";  // Importa a biblioteca bcrypt para hash de senh
 import jwt from "jsonwebtoken";  // Importa a biblioteca jwt para geração de tokens
 
 // Função para registrar um novo usuário
-export const register = async (req, res) => {  // Define a função 'register' como uma função assíncrona que recebe req (requisição) e res (resposta)
+export const registerUser = async (req, res) => {  // Define a função 'register' como uma função assíncrona que recebe req (requisição) e res (resposta)
     const { fullName, userName, emailUser, phoneNumberUser, passwordUser, confirmPassword } = req.body;  // Extrai informações do corpo da requisição
 
     if (!fullName) {  // Verifica se o nome completo está presente na requisição
@@ -44,8 +44,8 @@ export const register = async (req, res) => {  // Define a função 'register' c
             }
             if (data.length > 0) {  // Verifica se o email já está em uso
                 return res
-                .status(500)
-                .json({msg: "Este emailUser já está sendo utilizado." });  // Retorna erro 500 se o email já estiver em uso
+                    .status(500)
+                    .json({ msg: "Este emailUser já está sendo utilizado." });  // Retorna erro 500 se o email já estiver em uso
             } else {
                 // Gera um hash da senha
                 const passwordHash = await bcrypt.hash(passwordUser, 8);  // Hash da senha usando bcrypt
@@ -68,7 +68,7 @@ export const register = async (req, res) => {  // Define a função 'register' c
 };
 
 // Função para realizar o login
-export const login = (req, res) => {  // Define a função 'login' que recebe req (requisição) e res (resposta)
+export const loginUser = (req, res) => {  // Define a função 'login' que recebe req (requisição) e res (resposta)
     const { emailUser, passwordUser } = req.body;  // Extrai informações do corpo da requisição
 
     db.query("SELECT * FROM user WHERE emailUser = ?", [emailUser], async (error, data) => {  // Consulta o banco de dados para obter informações do usuário
@@ -76,7 +76,7 @@ export const login = (req, res) => {  // Define a função 'login' que recebe re
             console.log(error);  // Loga o erro no console
             return res.status(500).json({ msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!" });  // Retorna erro 500 se ocorrer um erro no servidor
         }
-        
+
         if (data.length == 0) {  // Verifica se o usuário não foi encontrado
             return res.status(404).json({ msg: "Usuário não encontrado!" });  // Retorna erro 404 se o usuário não for encontrado
         } else {
@@ -92,81 +92,71 @@ export const login = (req, res) => {  // Define a função 'login' que recebe re
                 const refreshToken = jwt.sign({  // Gera um token JWT
                     exp: Math.floor(Date.now() / 1000) + 24 * 60 * 60,  // Define a expiração do token para 24 horas
                     id: user.passwordUser  // Define o ID do usuário no token
-                }, 
-                process.env.REFRESH,
-                {algorithm: "HS256"}
+                },
+                    process.env.REFRESH,
+                    { algorithm: "HS256" }
                 );  // Chave secreta para assinar o refreshtoken
                 const token = jwt.sign({  // Gera um token JWT
                     exp: Math.floor(Date.now() / 1000) + 3600,  // Define a expiração do token para 24 horas
                     id: user.passwordUser  // Define o ID do usuário no token
-                }, 
-                process.env.TOKEN,
-                {algorithm: "HS256"}
+                },
+                    process.env.TOKEN,
+                    { algorithm: "HS256" }
                 );  // Chave secreta para assinar o token
-                res.status(200).json({msg: "Usuário logado com sucesso!", token, refreshToken})
-            } catch(err){
+                res.status(200).json({ msg: "Usuário logado com sucesso!", token, refreshToken })
+            } catch (err) {
                 console.log(err);
-                return res.status(500).json({msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!"})
+                return res.status(500).json({ msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!" })
             };
         };
     });
 };
 
 export const registerNGO = async (req, res) => {
-    const { fullName, userName, emailUser, phoneNumberUser, passwordUser, confirmPassword } = req.body;
+    const { cnpj, stateRegistration, corporateReason, emailNgo, phoneNumberNgo, physicalAddress, objectiveOfTheNgo, pageName } = req.body;
 
-    if (!fullName) {
-        return res.status(422).json({ msg: "O nome completo é obrigatório!" });
+    if (!cnpj) {
+        return res.status(422).json({ msg: "O CNPJ é o obrigatório" });
     }
 
-    if (!userName) {
-        return res.status(422).json({ msg: "O nome de usuário é obrigatório!" });
+    if (!stateRegistration) {
+        return res.status(422).json({ msg: "O Registro Estadual é obrigatório!" });
     }
 
-    if (!emailUser) {
-        return res.status(422).json({ msg: "O email é obrigatório!" });
+    if (!corporateReason) {
+        return res.status(422).json({ msg: "A Razão Social é obrigatória!" });
     }
 
-    if (!phoneNumberUser) {
-        return res.status(422).json({ msg: "O número de celular é obrigatório!" });
+    if (!emailNgo) {
+        return res.status(422).json({ msg: "O email corporativo é obrigatório!" });
     }
 
-    if (!passwordUser) {
-        return res.status(422).json({ msg: "A senha é obrigatória!" });
+    if (!phoneNumberNgo) {
+        return res.status(422).json({ msg: "O número de celular corporativo é obrigatório!" });
     }
 
-    if (passwordUser != confirmPassword) {
-        return res.status(422).json({ msg: "As senhas não são iguais." });
+    if (!physicalAddress) {
+        return res.status(422).json({ msg: "O endereço físico é obrigatório!" });
+    }
+
+    if (!objectiveOfTheNgo) {
+        return res.status(422).json({ msg: "O objetivo da ONG é obrigatório!" });
+    }
+
+    if (!pageName) {
+        return res.status(422).json({ msg: "O nome da página é obrigatório!" });
     }
 
     db.query(
-        "SELECT emailUser FROM user WHERE emailUser = ?",
-        [emailUser],
-        async (error, data) => {
+        "INSERT INTO ngo SET ?",
+        { cnpj, stateRegistration, corporateReason, emailNgo, phoneNumberNgo, physicalAddress, objectiveOfTheNgo, pageName },
+        (error) => {
             if (error) {
                 console.log(error);
-                return res.status(500).json({
-                    msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!",
-                });
-            }
-            if (data.length > 0) {
-                return res.status(500).json({ msg: "Este emailUser já está sendo utilizado." });
+                return res.status(500).json({ msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!" });
             } else {
-                const passwordHash = await bcrypt.hash(passwordUser, 8);
-                db.query(
-                    "INSERT INTO user SET ?",
-                    { fullName, userName, emailUser, phoneNumberUser, passwordUser: passwordHash },
-                    (error) => {
-                        if (error) {
-                            console.log(error);
-                            return res.status(500).json({ msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!" });
-                        } else {
-                            return res.status(200).json({ msg: "Cadastro efetuado com sucesso!" });
-                        };
-                    }
-                );
+                return res.status(200).json({ msg: "Cadastro efetuado com sucesso!" });
             };
-        });
+        }
+    );
 };
-
-export const loginNGO = (req, res) => {};

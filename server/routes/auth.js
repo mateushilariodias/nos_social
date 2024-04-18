@@ -13,6 +13,8 @@ router.post("/register", register);
 
 // Definição da rota de login ("/login") que aceita requisições POST e chama a função login do controlador.
 router.post("/login", login);
+router.post("/refresh", refrech);
+
 
 // Exportação do objeto Router para uso em outras partes do aplicativo.
 export default router;

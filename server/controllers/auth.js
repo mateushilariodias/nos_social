@@ -44,8 +44,8 @@ export const register = async (req, res) => {  // Define a função 'register' c
             }
             if (data.length > 0) {  // Verifica se o email já está em uso
                 return res
-                .status(500)
-                .json({msg: "Este emailUser já está sendo utilizado." });  // Retorna erro 500 se o email já estiver em uso
+                    .status(500)
+                    .json({ msg: "Este emailUser já está sendo utilizado." });  // Retorna erro 500 se o email já estiver em uso
             } else {
                 // Gera um hash da senha
                 const passwordHash = await bcrypt.hash(passwordUser, 8);  // Hash da senha usando bcrypt
@@ -76,7 +76,7 @@ export const login = (req, res) => {  // Define a função 'login' que recebe re
             console.log(error);  // Loga o erro no console
             return res.status(500).json({ msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!" });  // Retorna erro 500 se ocorrer um erro no servidor
         }
-        
+
         if (data.length == 0) {  // Verifica se o usuário não foi encontrado
             return res.status(404).json({ msg: "Usuário não encontrado!" });  // Retorna erro 404 se o usuário não for encontrado
         } else {
@@ -92,22 +92,30 @@ export const login = (req, res) => {  // Define a função 'login' que recebe re
                 const refreshToken = jwt.sign({  // Gera um token JWT
                     exp: Math.floor(Date.now() / 1000) + 24 * 60 * 60,  // Define a expiração do token para 24 horas
                     id: user.passwordUser  // Define o ID do usuário no token
-                }, 
-                process.env.REFRESH,
-                {algorithm: "HS256"}
+                },
+                    process.env.REFRESH,
+                    { algorithm: "HS256" }
                 );  // Chave secreta para assinar o refreshtoken
                 const token = jwt.sign({  // Gera um token JWT
                     exp: Math.floor(Date.now() / 1000) + 3600,  // Define a expiração do token para 24 horas
                     id: user.passwordUser  // Define o ID do usuário no token
-                }, 
-                process.env.TOKEN,
-                {algorithm: "HS256"}
+                },
+                    process.env.TOKEN,
+                    { algorithm: "HS256" }
                 );  // Chave secreta para assinar o token
-                res.status(200).json({msg: "Usuário logado com sucesso!", token, refreshToken})
-            } catch(err){
+                res.status(200).json({ msg: "Usuário logado com sucesso!", token, refreshToken })
+            } catch (err) {
                 console.log(err);
-                return res.status(500).json({msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!"})
+                return res.status(500).json({ msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!" })
             };
         };
     });
 };
+const refrech = (req, res) => {
+    const authHeader = req.header.cookie?.split("; ")[1]
+    const refrech = authHeader && authHeader.split('=')[1]
+
+    const tokensruct = refrech.split('.')[1]
+    const playload = atob(tokensruct)
+
+}

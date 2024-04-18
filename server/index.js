@@ -8,12 +8,22 @@ import postRouter from "./routes/post.js";
 
 // Criação do aplicativo Express.
 const app = express();
+const corsOpitions = {
+    origin: "http://nos-social.cb6uawesoga1.sa-east-1.rds.amazonaws.com",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "Access-Control-Allow-Credentials"
+    ]
+}
 
-// Middleware para permitir que o Express entenda o formato JSON.
+
 app.use(express.json());
-
-// Middleware para analisar corpos de requisição codificados em URL.
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors(corsOpitions));
+app.use(cookieParser());
 
 // Configuração das rotas para os roteadores de usuário e autenticação.
 app.use("/server/users/", userRouter); // Configurando rota principal dos usuários.

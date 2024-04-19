@@ -1,6 +1,8 @@
+'use client'
+
 import { UserContext } from "@/context/userContext";
-import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
-import { use, useContext, useEffect, useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useContext, useEffect, useState } from "react";
 import { FaPaperPlane, FaUserFriends } from "react-icons/fa";
 import { TbPhoto } from "react-icons/tb";
 import { makeRequest } from "../../axios";

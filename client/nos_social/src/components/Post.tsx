@@ -1,4 +1,5 @@
-import { useState, useEffect, useContext } from "react";
+'use client'
+import { useState, useContext } from "react";
 import { FaPaperPlane, FaRegComment, FaThumbsUp } from "react-icons/fa";
 import moment from "moment";
 import 'moment/locale/pt-br'

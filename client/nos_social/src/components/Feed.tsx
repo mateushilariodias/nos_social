@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+'use client'
+
 import Post from "./Post";
 import { makeRequest } from "../../axios";
 import PostCreation from "./postCreation";
@@ -14,16 +15,6 @@ interface IPost {
 }
 
 function FeedMain() {
-
-    const [posts, setPosts] = useState<IPost[] | undefined>(undefined)
-
-    useEffect(() => {
-        makeRequest.get("post/").then((res) => {
-            setPosts(res.data.data)
-        }).catch((err) => {
-            console.log(err);
-        })
-    }, [])
 
     const { data, isLoading, error } = useQuery<IPost[] | undefined>({
         queryKey: ['posts'],

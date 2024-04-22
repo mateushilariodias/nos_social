@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";  // Importa a biblioteca bcrypt para hash de senh
 import jwt from "jsonwebtoken";  // Importa a biblioteca jwt para geração de tokens
 
 // Função para registrar um novo usuário
-export const register = async (req, res) => {  // Define a função 'register' como uma função assíncrona que recebe req (requisição) e res (resposta)
+export const registerUser = async (req, res) => {  // Define a função 'register' como uma função assíncrona que recebe req (requisição) e res (resposta)
     const { fullName, userName, emailUser, phoneNumberUser, passwordUser, confirmPassword } = req.body;  // Extrai informações do corpo da requisição
 
     if (!fullName) {  // Verifica se o nome completo está presente na requisição
@@ -67,8 +67,7 @@ export const register = async (req, res) => {  // Define a função 'register' c
         });
 };
 
-// Função para realizar o login
-export const login = (req, res) => {  // Define a função 'login' que recebe req (requisição) e res (resposta)
+export const loginUser = (req, res) => {  // Define a função 'login' que recebe req (requisição) e res (resposta)
     const { emailUser, passwordUser } = req.body;  // Extrai informações do corpo da requisição
 
     db.query("SELECT * FROM user WHERE emailUser = ?", [emailUser], async (error, data) => {  // Consulta o banco de dados para obter informações do usuário
@@ -81,6 +80,7 @@ export const login = (req, res) => {  // Define a função 'login' que recebe re
             return res.status(404).json({ msg: "Usuário não encontrado!" });  // Retorna erro 404 se o usuário não for encontrado
         } else {
             const user = data[0];  // Obtém os dados do usuário
+
 
             db.query("SELECT * FROM user WHERE emailUser = ?", [emailUser], async (error, data) => {  // Consulta o banco de dados para obter informações do usuário
                 if (error) {  // Verifica se ocorreu algum erro na consulta
@@ -142,13 +142,89 @@ export const login = (req, res) => {  // Define a função 'login' que recebe re
             console.log(err);
             return res.status(500).json({ msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!" })
         };
+
+        const refrech = (req, res) => {
+            const authHeader = req.header.cookie?.split("; ")[1]
+            const refrech = authHeader && authHeader.split('=')[1]
+
+            const tokensruct = refrech.split('.')[1]
+            const playload = atob(tokensruct)
+
+            const checkPassword = await bcrypt.compare(passwordUser, user.passwordUser);  // Compara a senha enviada com a senha hashada no banco de dados
+
+            if (!checkPassword) {  // Verifica se a senha está incorreta
+                return res.status(422).json({ msg: "Senha incorreta!" });  // Retorna erro 422 se a senha estiver incorreta
+            }
+
+            try {
+                const refreshToken = jwt.sign({  // Gera um token JWT
+                    exp: Math.floor(Date.now() / 1000) + 24 * 60 * 60,  // Define a expiração do token para 24 horas
+                    id: user.passwordUser  // Define o ID do usuário no token
+                },
+                    process.env.REFRESH,
+                    { algorithm: "HS256" }
+                );  // Chave secreta para assinar o refreshtoken
+                const token = jwt.sign({  // Gera um token JWT
+                    exp: Math.floor(Date.now() / 1000) + 3600,  // Define a expiração do token para 24 horas
+                    id: user.passwordUser  // Define o ID do usuário no token
+                },
+                    process.env.TOKEN,
+                    { algorithm: "HS256" }
+                );  // Chave secreta para assinar o token
+                res.status(200).json({ msg: "Usuário logado com sucesso!", token, refreshToken })
+            } catch (err) {
+                console.log(err);
+                return res.status(500).json({ msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!" })
+            };
+        };
     });
 };
-const refrech = (req, res) => {
-    const authHeader = req.header.cookie?.split("; ")[1]
-    const refrech = authHeader && authHeader.split('=')[1]
 
-    const tokensruct = refrech.split('.')[1]
-    const playload = atob(tokensruct)
+export const registerNGO = async (req, res) => {
+    const { cnpj, stateRegistration, corporateReason, emailNgo, phoneNumberNgo, physicalAddress, objectiveOfTheNgo, pageName } = req.body;
 
+    if (!cnpj) {
+        return res.status(422).json({ msg: "O CNPJ é o obrigatório" });
+    }
+
+    if (!stateRegistration) {
+        return res.status(422).json({ msg: "O Registro Estadual é obrigatório!" });
+    }
+
+    if (!corporateReason) {
+        return res.status(422).json({ msg: "A Razão Social é obrigatória!" });
+    }
+
+    if (!emailNgo) {
+        return res.status(422).json({ msg: "O email corporativo é obrigatório!" });
+    }
+
+    if (!phoneNumberNgo) {
+        return res.status(422).json({ msg: "O número de celular corporativo é obrigatório!" });
+    }
+
+    if (!physicalAddress) {
+        return res.status(422).json({ msg: "O endereço físico é obrigatório!" });
+    }
+
+    if (!objectiveOfTheNgo) {
+        return res.status(422).json({ msg: "O objetivo da ONG é obrigatório!" });
+    }
+
+    if (!pageName) {
+        return res.status(422).json({ msg: "O nome da página é obrigatório!" });
+    }
+
+    db.query(
+        "INSERT INTO ngo SET ?",
+        { cnpj, stateRegistration, corporateReason, emailNgo, phoneNumberNgo, physicalAddress, objectiveOfTheNgo, pageName },
+        (error) => {
+            if (error) {
+                console.log(error);
+                return res.status(500).json({ msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!" });
+            } else {
+                return res.status(200).json({ msg: "Cadastro efetuado com sucesso!" });
+            };
+        }
+    );
 };

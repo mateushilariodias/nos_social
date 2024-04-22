@@ -33,3 +33,7 @@ git branch -d teste01
 git push origin --delete teste01
 
 node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"
+
+git branch julio
+
+git checkout julio

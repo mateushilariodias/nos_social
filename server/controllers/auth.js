@@ -143,12 +143,12 @@ export const loginUser = (req, res) => {  // Define a função 'login' que receb
             return res.status(500).json({ msg: "Aconteceu algum erro no servidor, tente novamente mais tarde!" })
         };
 
-        const refrech = (req, res) => {
-            const authHeader = req.header.cookie?.split("; ")[1]
-            const refrech = authHeader && authHeader.split('=')[1]
+        const refrech = async (req, res) => {
+            const authHeader = req.header.cookie?.split("; ")[1];
+            const refrech = authHeader && authHeader.split('=')[1];
 
-            const tokensruct = refrech.split('.')[1]
-            const playload = atob(tokensruct)
+            const tokensruct = refrech.split('.')[1];
+            const playload = atob(tokensruct);
 
             const checkPassword = await bcrypt.compare(passwordUser, user.passwordUser);  // Compara a senha enviada com a senha hashada no banco de dados
 

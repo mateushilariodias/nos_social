@@ -34,5 +34,3 @@ export const getPost = (req, res) => {
         return res.status(200).json({ msg: "Post enviado com sucesso!" });
     }
 };
-
-

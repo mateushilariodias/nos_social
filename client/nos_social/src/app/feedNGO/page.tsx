@@ -23,11 +23,11 @@ function FeedNGO() {
 
     if(isSuccess){
         console.log(data.msg);
-        router.push('/loginUser')
     }
 
     if(isError){
         console.log(error);
+        router.push('/loginUser')
     }
 
     return (

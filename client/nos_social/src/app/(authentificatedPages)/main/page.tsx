@@ -1,6 +1,6 @@
-import FeedUser from "@/app/feedUser/page";
+import Feed from "@/components/Feed";
 
 function Main(){
-    return <FeedUser/>
+    return <Feed/>
 }
 export default Main;

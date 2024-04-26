@@ -180,7 +180,7 @@ export const loginUser = (req, res) => {  // Define a função 'login' que receb
     });
 };
 
-export const registerNGO = async (req, res) => {
+export const registerNgo = async (req, res) => {
     const { cnpj, stateRegistration, corporateReason, emailNgo, phoneNumberNgo, physicalAddress, objectiveOfTheNgo, pageName } = req.body;
 
     if (!cnpj) {

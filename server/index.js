@@ -6,6 +6,9 @@ import userRouter from "./routes/user.js";
 import authRouter from "./routes/auth.js";
 import postRouter from "./routes/post.js";
 
+import cors from "cors";
+import cookieParser from "cookie-parser";
+
 // Criação do aplicativo Express.
 const app = express();
 const corsOpitions = {

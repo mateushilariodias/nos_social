@@ -1,13 +1,22 @@
-'use client'
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
 
-import { UserContextProvider } from '@/context/userContext';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+const inter = Inter({ subsets: ["latin"] });
 
-export default function FeedUserLayout({ children }: { children: React.ReactNode }) {
-  const queryClient = new QueryClient()
+export const metadata: Metadata = {
+  title: "Nós Social",
+  description: "Unidos para o bem social",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-        <QueryClientProvider client={queryClient}>
-          <UserContextProvider>{children}</UserContextProvider>
-        </QueryClientProvider>
+    <html lang="pt-br">
+      <body className={inter.className}>{children}</body>
+    </html>
   );
 }

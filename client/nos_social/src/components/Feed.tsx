@@ -2,7 +2,7 @@
 
 import Post from "./Post";
 import { makeRequest } from "../../axios";
-import PostCreation from "./postCreation";
+import PostCreation from "./PostCreation";
 import { useQuery } from "@tanstack/react-query";
 
 interface IPost {
@@ -31,7 +31,7 @@ function FeedMain() {
     }
 
     return (
-        <section className="w-full flex flex-col items-center gap-5">
+        <section className="w-full flex min-h-screen flex-col items-center gap-5">
             <PostCreation />
             {isLoading ? (<span>Carregando postagens...</span>) : (
                 <div className="w-full flex flex-col gap-5 items-center">

@@ -2,12 +2,13 @@
 
 import Feed from "@/components/Feed";
 import Header from "@/components/HeaderFeed";
-import { useRouter } from "next/navigation";
-import { makeRequest } from "../../../axios";
+import { useRouter } from "next/navigation"
 import { useQuery } from "@tanstack/react-query";
 import PostCreation from "@/components/PostCreation";
+import { makeRequest } from "../../../axios";
 
-function FeedNGO() {
+
+function FeedUser() {
 
     const router = useRouter();
 
@@ -27,7 +28,7 @@ function FeedNGO() {
 
     if(isError){
         console.log(error);
-        router.push('/loginUser')
+        // router.push('/loginUser')
     }
 
     return (
@@ -37,4 +38,4 @@ function FeedNGO() {
         </main>
     )
 }
-export default FeedNGO;
+export default FeedUser;

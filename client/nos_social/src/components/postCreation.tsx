@@ -7,7 +7,7 @@ import { FaPaperPlane, FaUserFriends } from "react-icons/fa";
 import { TbPhoto } from "react-icons/tb";
 import { makeRequest } from "../../axios";
 
-function postCreation() {
+function PostCreation() {
 
     const { user } = useContext(UserContext)
     const [description, setDescription] = useState("")
@@ -79,4 +79,4 @@ function postCreation() {
         </div>
     )
 }
-export default postCreation;
+export default PostCreation;

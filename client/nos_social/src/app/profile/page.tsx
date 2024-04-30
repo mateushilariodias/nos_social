@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from "@tanstack/react-query";
-import { makeRequest } from "../../../../axios";
+import { makeRequest } from "../../../axios";
 
 function Profile({ searchParameters }: { searchParameters: { id: string } }) {
 

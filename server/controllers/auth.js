@@ -114,7 +114,7 @@ export const loginUser = (req, res) => {  // Define a função 'login' que receb
                         .cookie("accessToken", token, {
                             httpOnly: true
                         })
-                        .cookie("refreshToken", refreshTokentoken, {
+                        .cookie("refreshToken", refreshToken, {
                             httpOnly: true
                         })
                         .status(200)
@@ -132,10 +132,18 @@ export const loginUser = (req, res) => {  // Define a função 'login' que receb
         }
     );
 };
-const refresh = (req, res) => {
-    const authHeader = req.header.cookie?.split("; ")[1];
-    const refresh = authHeader && authHeader.split('=')[1];
 
+export const logout = (req, res) => {
+    return res
+        .clearCookie("accessToken", { secure: true, sameSite: "none" })      
+        .clearCookie("refreshtoken", { secure: true, sameSite: "none" })
+        .status(200)
+        .json({ msg: "Logout efetuado com sucesso!" });
+};
+
+export const refresh = (req, res) => {
+    const authHeader = req.headers.cookie?.split("; ")[1];
+    const refresh = authHeader && authHeader.split('=')[1];
     const tokenStruct = refresh.split('.')[1];
     const payload = atob(tokenStruct);
 
@@ -156,18 +164,17 @@ const refresh = (req, res) => {
             process.env.TOKEN,
             { algorithm: "HS256" }
         );
-        delete user.passwordUser;
         res
             .cookie("accessToken", token, {
                 httpOnly: true
             })
             .cookie("refreshToken", refreshToken, {
                 httpOnly: true
+                
             })
             .status(200)
             .json({
                 msg: "Token atualizado com sucesso!",
-                user,
             });
     } catch (err) {
         console.log(err);

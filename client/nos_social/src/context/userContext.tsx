@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 interface ContextProps {
     children: React.ReactNode;
@@ -28,10 +28,12 @@ const intialValue = {
 export const UserContext = createContext<User>(intialValue)
 
 export const UserContextProvider = ({ children }: ContextProps) => {
-    let UserJSON = localStorage.getItem("nos-social:user")
-    const [user, setUser] = useState(
-        UserJSON ? JSON.parse(UserJSON) : intialValue.user
-    )
+    const [user, setUser] = useState(intialValue.user);
+    useEffect(() => {
+        let UserJSON = localStorage.getItem("nos-social:user");
+        setUser(UserJSON && JSON.parse(UserJSON));
+    });
+
     return (
         <UserContext.Provider value={{
             user,

@@ -3,16 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../../axios";
 import Feed from "@/components/Feed";
-
-interface IPost {
-    id: number;
-    profilePicture: string;
-    author: string;
-    description: string;
-    image: string;
-    createdPost: string;
-    userId: number;
-}
+import { IPost } from "@/interfaces";
 
 function Profile({ searchParameters }: { searchParameters: { id: string } }) {
 

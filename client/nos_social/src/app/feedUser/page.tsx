@@ -6,16 +6,7 @@ import { useRouter } from "next/navigation"
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../../axios";
 import PostCreation from "@/components/postCreation";
-
-interface IPost {
-    id: number;
-    profilePicture: string;
-    author: string;
-    description: string;
-    image: string;
-    createdPost: string;
-    userId: number;
-}
+import { IPost } from "@/interfaces";
 
 function FeedUser() {
 

@@ -1,15 +1,6 @@
 import moment from "moment";
 import 'moment/locale/pt-br'
-
-interface IComment {
-    id: number;
-    comment: number;
-    userName: string;
-    userImg: string;
-    commentUserId: number;
-    postId: number
-    createdComment: string;
-}
+import { IComment } from "@/interfaces";
 
 function Comment(props: { comment: IComment }) {
 

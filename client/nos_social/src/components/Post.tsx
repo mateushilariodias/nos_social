@@ -7,6 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 import { UserContext } from "@/context/userContext";
 import Comment from "./Comment";
+import Link from "next/link";
 
 interface IPost {
     id: number;
@@ -15,6 +16,7 @@ interface IPost {
     description: string;
     image: string;
     createdPost: string;
+    userId: number;
 }
 
 interface ILike {
@@ -36,7 +38,7 @@ interface IComment {
 
 function Post(props: { post: IPost }) {
 
-    const { id, profilePicture, author, description, image, createdPost } = props.post;
+    const { id, profilePicture, author, description, image, createdPost, userId } = props.post;
     const { user } = useContext(UserContext)
     const [comment, setComment] = useState('')
     const [liked, setLiked] = useState(false)
@@ -119,13 +121,15 @@ function Post(props: { post: IPost }) {
     }
 
     return (
-        <div className="w-1/3 bg-white rounded-lg p-4 shadow-md">
+        <div className="w-full bg-white rounded-lg p-4 shadow-md">
             <header className="flex gap-2 pb-4 border-b items-center">
-                <img className="h-8 w-8 rounded-full" src={profilePicture ? profilePicture : "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Foto de perfil do criador da postagem" />
-                <div className="flex flex-col">
-                    <span className="font-semibold">{author}</span>
-                    <span className="text-xs">{moment(createdPost).fromNow()}</span>
-                </div>
+                <Link href={'/profile?id=' + userId}>
+                    <img className="h-8 w-8 rounded-full" src={profilePicture ? profilePicture : "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Foto de perfil do criador da postagem" />
+                    <div className="flex flex-col">
+                        <span className="font-semibold">{author}</span>
+                        <span className="text-xs">{moment(createdPost).fromNow()}</span>
+                    </div>
+                </Link>
             </header>
             <main>
                 {description && (<div className="py-4 w-full">

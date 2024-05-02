@@ -28,7 +28,7 @@ function Header() {
     });
 
     return (
-        <header className="w-full bg-white flex justify-between items-center py-4 px-72 shadow-sm">
+        <header className="fixed z-10 w-full bg-white flex justify-between items-center py-4 px-72 shadow-sm">
             <Link href="homepage" className="font-bold text-sky-600 text-2xl">Nós Social</Link>
             <div className="flex bg-zinc-100 items-center text-gray-600 py-1 px-3 rounded-full">
                 <input className="bg-zinc-100 focus-visible:outline-none py-2 px-4" type="text" name="search" id="search" placeholder="Pesquisar" />

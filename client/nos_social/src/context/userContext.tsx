@@ -32,7 +32,7 @@ export const UserContextProvider = ({ children }: ContextProps) => {
     useEffect(() => {
         let UserJSON = localStorage.getItem("nos-social:user");
         setUser(UserJSON && JSON.parse(UserJSON));
-    });
+    },[]);
 
     return (
         <UserContext.Provider value={{

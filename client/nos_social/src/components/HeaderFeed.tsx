@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FaSearch, FaBell } from "react-icons/fa"
 import { TbMessageCircle2Filled } from "react-icons/tb"
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueries, useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 import { UserContext } from "@/context/userContext";
 
@@ -11,6 +11,7 @@ function Header() {
 
     const { user, setUser } = useContext(UserContext)
     const [showMenu, setShowMenu] = useState(false)
+    const [search, setSearch] = useState<string | null>(null)
     const router = useRouter()
     // const isFeedUser = router.pathname === "/feedUser"; 
 
@@ -27,15 +28,34 @@ function Header() {
         },
     });
 
+    const { data, error } = useQuery({
+        queryKey: ['search'],
+        queryFn: () => makeRequest.get(`search/search-users?params=${search}`).then((res) => {
+            return res.data
+        }),
+        enabled: !!search
+    })
+
+    if (error) {
+        console.log(error)
+    }
+
     return (
         <header className="fixed z-10 w-full bg-white flex justify-between items-center py-4 px-72 shadow-sm">
             <Link href="homepage" className="font-bold text-sky-600 text-2xl">Nós Social</Link>
             <div className="flex bg-zinc-100 items-center text-gray-600 py-1 px-3 rounded-full">
-                <input className="bg-zinc-100 focus-visible:outline-none py-2 px-4" type="text" name="search" id="search" placeholder="Pesquisar" />
+                <input className="bg-zinc-100 focus-visible:outline-none py-2 px-4" type="text" name="search" id="search" placeholder="Pesquisar" value={search ? search : ""} onChange={(e) => setSearch(e.target.value)} />
                 <FaSearch />
             </div>
+            {search && (
+                <div className="absolute flex flex-col bg-white p-4 shadow-md rounded-md gap-2 border-t whitespace-nowrap right-[-8px]">
+                    {data?.map((users, id) => {
+                        return <Link href="" key={id}></Link>
+                    })}
+                </div>
+            )}
             <div >
-                <Link  href="registerNGO" className="bg-blue-600 hover:bg-blue-800 py-3 px-6 font-bold text-white rounded-lg">
+                <Link href="registerNGO" className="bg-blue-600 hover:bg-blue-800 py-3 px-6 font-bold text-white rounded-lg">
                     <strong>Cadastrar ONG</strong>
                 </Link>
             </div>

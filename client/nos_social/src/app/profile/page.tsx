@@ -5,11 +5,11 @@ import { makeRequest } from "../../../axios";
 import Feed from "@/components/Feed";
 import { IPost } from "@/interfaces";
 
-function Profile({ searchParameters }: { searchParameters: { id: string } }) {
+function Profile({ searchParams }: { searchParams: { id: string } }) {
 
     const profileQuery = useQuery({
-        queryKey: ['profile', searchParameters.id],
-        queryFn: () => makeRequest.get(`users/get-user?id=` + searchParameters.id).then((res) => {
+        queryKey: ['profile', searchParams.id],
+        queryFn: () => makeRequest.get(`users/get-user?id=` + searchParams.id).then((res) => {
             return res.data[0]
         })
     })
@@ -21,7 +21,7 @@ function Profile({ searchParameters }: { searchParameters: { id: string } }) {
     const postQuery = useQuery<IPost[] | undefined>({
         queryKey: ['posts/?id='],
         queryFn: () =>
-            makeRequest.get("post/"+searchParameters.id).then((res) => {
+            makeRequest.get("post/"+searchParams.id).then((res) => {
                 return res.data.data
             })
     })

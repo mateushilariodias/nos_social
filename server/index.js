@@ -34,6 +34,6 @@ app.use("/server/auth/", authRouter);   // Configurando rota principal da autent
 app.use("/server/posts/", postRouter); // Configurar rota principal dos posts
 
 // Inicialização do servidor na porta 3306.
-app.listen(3306, () => {
+app.listen(3000, () => {
     console.log("Servidor rodando na porta 3306!");
 });

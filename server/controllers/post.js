@@ -8,7 +8,9 @@ export const creatPost = (req, res) => {
 
     // Verificar se a postagem contém texto ou imagem
     if (!post_desc && !img) {
-        return res.status(422).json({ msg: "O post precisa ter um texto ou uma imagem!" });
+        return res
+        .status(422)
+        .json({ msg: "O post precisa ter um texto ou uma imagem!" });
     }
 
     // Executar uma query SQL para inserir a postagem no banco de dados
@@ -28,7 +30,7 @@ export const creatPost = (req, res) => {
 
 export const getPost = (req, res) => {
     db.query(
-        "SELECT p. * , u.userName, userImg FROM posts as p JOIN user as u ON (u.emailUser = p.userId)",
+        "SELECT p. * , u.userName, userImg FROM posts as p JOIN user as u ON (u.emailUser = p.userId) ORDER BY created_at DESC",
         (error) => {
             if (error) {
                 console.log(error);

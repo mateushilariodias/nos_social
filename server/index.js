@@ -4,6 +4,7 @@ import express from "express";
 import userRouter from "./routes/user.js";
 import authRouter from "./routes/auth.js";
 import postRouter from "./routes/post.js";
+import likesRouter from "./routes/likes.js";
 import commentRouter from "./routes/comment.js";
 import uploadRouter from "./routes/upload.js";
 import bodyParser from "body-parser";
@@ -33,7 +34,8 @@ app.use(cookieParser());
 // Configuração das rotas para os roteadores de usuário e autenticação.
 app.use("/server/users/", userRouter); // Configurando rota principal dos usuários.
 app.use("/server/auth/", authRouter);   // Configurando rota principal da autenticação.
-app.use("/server/posts/", postRouter); // Configurar rota principal dos posts
+app.use("/server/posts/", postRouter);
+app.use("/server/likes/", likesRouter);
 app.use("/server/comment/", commentRouter); 
 app.use("/server/upload/", uploadRouter); 
 

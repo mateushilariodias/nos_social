@@ -5,7 +5,6 @@ import Header from "@/components/HeaderFeedUser";
 import { useRouter } from "next/navigation"
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../../axios";
-import PostCreation from "@/components/postCreation";
 import { IPost } from "@/interfaces";
 
 function FeedUser() {

@@ -24,3 +24,13 @@ export interface IComment {
     postId: number
     createdComment: string;
 }
+
+export interface IUser {
+    id: number;
+    fullName: string,
+    userName: string,
+    emailUser: string,
+    phoneNumberUser: string,
+    passwordUser: string,
+    userImg: string,
+}

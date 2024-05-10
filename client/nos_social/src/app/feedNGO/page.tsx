@@ -1,11 +1,13 @@
 "use client";
 
 import Feed from "@/components/Feed";
-import Header from "@/components/HeaderFeedUser";
+
 import { useRouter } from "next/navigation";
 import { makeRequest } from "../../../axios";
 import { useQuery } from "@tanstack/react-query";
 import PostCreation from "@/components/postCreation";
+import Header from "@/components/HeaderFeedNGO";
+import { IPost } from "@/interfaces";
 
 
 function FeedNGO() {

@@ -18,6 +18,32 @@ function RegisterUser() {
 
     const handleRegisterUser = (e: any) => {
         e.preventDefault();
+
+        // if (!fullName.match(/^[a-zA-Z\s]*$/)) {
+        //     setError("O campo nome só pode permitir letras maiúsculas e minúsculas.");
+        //     return;
+        // }
+        // if (!userName.match(/^[a-zA-Z0-9]*$/)) {
+        //     setError("O campo de usuário só pode conter letras maiúsculas, minúsculas e números.");
+        //     return;
+        // }
+        // if (!emailUser.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        //     setError("O campo de email deve ter um formato válido.");
+        //     return;
+        // }
+        // if (!phoneNumberUser.match(/^\(\d{2}\) \d{5}-\d{4}$/)) {
+        //     setError("O campo de telefone deve ter o formato (XX) XXXXX-XXXX.");
+        //     return;
+        // }
+        // if (!passwordUser.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/)) {
+        //     setError("A senha deve ter no mínimo 8 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais.");
+        //     return;
+        // }
+        // if (passwordUser !== confirmPassword) {
+        //     setError("As senhas não coincidem.");
+        //     return;
+        // }
+
         makeRequest
             .post('auth/registerUser', { fullName, userName, emailUser, phoneNumberUser, passwordUser, confirmPassword })
             .then((res) => {

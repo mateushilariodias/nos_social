@@ -12,7 +12,7 @@ import AuthInput from "@/components/AuthInput";
 function Profile({ searchParams }: { searchParams: { id: string } }) {
 
     const queryClient = useQueryClient();
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const [userName, setUserName] = useState('');
     const [userImg, setUserImg] = useState('');
     const [bgImg, setBgImg] = useState('');
@@ -22,7 +22,6 @@ function Profile({ searchParams }: { searchParams: { id: string } }) {
     const profileQuery = useQuery({
         queryKey: ['profile', searchParams.id],
         queryFn: () => makeRequest.get(`users/get-user?id=` + searchParams.id).then((res) => {
-            console.log(res.data[0])
             setUserName(res.data[0].userName)
             setUserImg(res.data[0].userImg)
             setBgImg(res.data[0].bgImg)
@@ -52,9 +51,16 @@ function Profile({ searchParams }: { searchParams: { id: string } }) {
         mutationFn: async (data: { userName: string, userImg: string, bgImg: string, id: number }) => {
             return makeRequest
                 .put(`users/update-user`, data)
-                .then((res) => res.data);
+                .then((res) => {
+                    if (user) {
+                        const newUser = {userName:data.userName, userImg:data.userImg, bgImg:data.bgImg, id:data.id, emailUser:user?.emailUser}
+                        setUser(newUser)
+                        return res.data
+                    }
+                });
         },
         onSuccess: () => {
+            setEditProfile(false)
             queryClient.invalidateQueries({ queryKey: ["profile", searchParams.id] })
         },
     });
@@ -85,7 +91,7 @@ function Profile({ searchParams }: { searchParams: { id: string } }) {
                                 <AuthInput newState={setUserName} htmlForAndNameAndId="userName" label="Nome de usuário:" type="text"></AuthInput>
                                 <AuthInput newState={setUserImg} htmlForAndNameAndId="userImg" label="Imagem de perfil do usuário:" type="image"></AuthInput>
                                 <AuthInput newState={setBgImg} htmlForAndNameAndId="bgImg" label="Imagem de fundo do perfil do usuário:" type="image"></AuthInput>
-                                <button className={`w-1/2 rounded-md py-2 font-semibold bg-zinc-300 hover:text-black self-center`} onClick={(e) => {e.preventDefault() editProfileMutation.mutate({userName, userImg, bgImg, id:+searchParams.id})}}>
+                                <button className={`w-1/2 rounded-md py-2 font-semibold bg-zinc-300 hover:text-black self-center`} onClick={(e) => {e.preventDefault(); editProfileMutation.mutate({userName, userImg, bgImg, id:+searchParams.id})}}>
                                     Editar perfil
                                 </button>
                             </form>

@@ -6,6 +6,8 @@ import Feed from "@/components/Feed";
 import { IPost } from "@/interfaces";
 import { useContext, useState } from "react";
 import { UserContext } from "@/context/userContext";
+import { FaTimesCircle } from "react-icons/fa";
+import AuthInput from "@/components/AuthInput";
 
 function Profile({ searchParams }: { searchParams: { id: string } }) {
 
@@ -20,6 +22,10 @@ function Profile({ searchParams }: { searchParams: { id: string } }) {
     const profileQuery = useQuery({
         queryKey: ['profile', searchParams.id],
         queryFn: () => makeRequest.get(`users/get-user?id=` + searchParams.id).then((res) => {
+            console.log(res.data[0])
+            setUserName(res.data[0].userName)
+            setUserImg(res.data[0].userImg)
+            setBgImg(res.data[0].bgImg)
             return res.data[0]
         })
     })
@@ -65,13 +71,26 @@ function Profile({ searchParams }: { searchParams: { id: string } }) {
             <div className="pt-36 w-3/5 flex flex-col items-center gap-4">
                 {user?.id === +searchParams.id ? (
                     <span>Conheça mais do perfil.</span>
-                ) : 
-                <button className={`w-1/2 rounded-md py-2 font-semibold bg-zinc-300 hover:text-black`}>
-                    Editar perfil
-                </button>
+                ) :
+                    <button className={`w-1/2 rounded-md py-2 font-semibold bg-zinc-300 hover:text-black`} onClick={() => setEditProfile(true)}>
+                        Editar perfil
+                    </button>
                 }
                 {editProfile &&
-                    <div className="fixed top-0 bottom-0 right-0 left-0 bg-[#00000094] z-10 flex items-center justify-center">Editar perfil</div>
+                    <div className="fixed top-0 bottom-0 right-0 left-0 bg-[#00000094] z-10 flex items-center justify-center">
+                        <div className="bg-white w-2/3 rounded-xl flex flex-col items-center">
+                            <header className="w-full border-b font-semibold text-lg text-zinc-600 flex justify-between items-center p-2">Editar perfil
+                                <button onClick={() => setEditProfile(false)}><FaTimesCircle className="text-red-600" /></button></header>
+                            <form className="w-2/3 py-8 flex flex-col gap-8">
+                                <AuthInput newState={setUserName} htmlForAndNameAndId="userName" label="Nome de usuário:" type="text"></AuthInput>
+                                <AuthInput newState={setUserImg} htmlForAndNameAndId="userImg" label="Imagem de perfil do usuário:" type="image"></AuthInput>
+                                <AuthInput newState={setBgImg} htmlForAndNameAndId="bgImg" label="Imagem de fundo do perfil do usuário:" type="image"></AuthInput>
+                                <button className={`w-1/2 rounded-md py-2 font-semibold bg-zinc-300 hover:text-black self-center`} onClick={(e) => {e.preventDefault() editProfileMutation.mutate({userName, userImg, bgImg, id:+searchParams.id})}}>
+                                    Editar perfil
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 }
                 <Feed post={postQuery.data} />
             </div>

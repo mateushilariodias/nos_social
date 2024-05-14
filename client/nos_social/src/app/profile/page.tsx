@@ -53,7 +53,7 @@ function Profile({ searchParams }: { searchParams: { id: string } }) {
                 .put(`users/update-user`, data)
                 .then((res) => {
                     if (user) {
-                        const newUser = {userName:data.userName, userImg:data.userImg, bgImg:data.bgImg, id:data.id, emailUser:user?.emailUser}
+                        const newUser = { userName: data.userName, userImg: data.userImg, bgImg: data.bgImg, id: data.id, emailUser: user?.emailUser }
                         setUser(newUser)
                         return res.data
                     }
@@ -66,7 +66,7 @@ function Profile({ searchParams }: { searchParams: { id: string } }) {
     });
 
     return (
-        <div className="w-3/5 flex flex-col items-center">
+        <div className="flex flex-col items-center">
             <div className="relative">
                 <img className="rounded-xl" src={profileQuery.data?.bgImg ? profileQuery.data.bgImg : "https://www.biotecdermo.com.br/wp-content/uploads/2016/10/sem-imagem-10.jpg"} alt="Imagem de Fundo do perfil" />
                 <div className="flex absolute bottom-[-110px] left-10 items-center">
@@ -81,6 +81,9 @@ function Profile({ searchParams }: { searchParams: { id: string } }) {
                     <button className={`w-1/2 rounded-md py-2 font-semibold bg-zinc-300 hover:text-black`} onClick={() => setEditProfile(true)}>
                         Editar perfil
                     </button>
+                //     <button className={`w-1/2 rounded-md py-2 font-semibold bg-zinc-300 hover:text-black`}>
+                //         Deletar perfil
+                //     </button>
                 }
                 {editProfile &&
                     <div className="fixed top-0 bottom-0 right-0 left-0 bg-[#00000094] z-10 flex items-center justify-center">
@@ -91,7 +94,7 @@ function Profile({ searchParams }: { searchParams: { id: string } }) {
                                 <AuthInput newState={setUserName} htmlForAndNameAndId="userName" label="Nome de usuário:" type="text"></AuthInput>
                                 <AuthInput newState={setUserImg} htmlForAndNameAndId="userImg" label="Imagem de perfil do usuário:" type="image"></AuthInput>
                                 <AuthInput newState={setBgImg} htmlForAndNameAndId="bgImg" label="Imagem de fundo do perfil do usuário:" type="image"></AuthInput>
-                                <button className={`w-1/2 rounded-md py-2 font-semibold bg-zinc-300 hover:text-black self-center`} onClick={(e) => {e.preventDefault(); editProfileMutation.mutate({userName, userImg, bgImg, id:+searchParams.id})}}>
+                                <button className={`w-1/2 rounded-md py-2 font-semibold bg-zinc-300 hover:text-black self-center`} onClick={(e) => { e.preventDefault(); editProfileMutation.mutate({ userName, userImg, bgImg, id: +searchParams.id }) }}>
                                     Editar perfil
                                 </button>
                             </form>

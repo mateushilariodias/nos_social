@@ -34,3 +34,16 @@ export interface IUser {
     passwordUser: string,
     userImg: string,
 }
+
+export interface INgo {
+    id: number;
+    cnpj: string,
+    stateRegistration: string,
+    corporateReason: string,
+    emailNgo: string,
+    phoneNumberNgo: string,
+    objectiveOfTheNgo: string,
+    pageName: string,
+    imageNgo: string,
+    bgImageNgo: string,
+}

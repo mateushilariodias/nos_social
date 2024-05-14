@@ -8,7 +8,7 @@ import { getUser } from "../controllers/users.js";
 const router = express.Router();
 
 // Definição da rota "/teste" que aceita requisições GET e chama a função getUser do controlador de usuários.
-router.get("/teste", getUser);
+router.get("/get-user", getUser);
 
 // Exportação do objeto Router para uso em outras partes do aplicativo.
 export default router;

@@ -55,9 +55,9 @@ function PostCreation() {
     }
 
     return (
-        <div className="mt-8 w-full bg-white rounded-lg p-4 shadow-md flex flex-col gap-3">
+        <div className="mt-8 w-full bg-white rounded-lg pb-4 px-4 lg:p-4 shadow-md flex flex-col gap-3">
             {image && <img src={imageUnification} alt="Imagem da postagem" />}
-            <div className="flex gap-4 pt-6">
+            <div className="flex gap-2 lg:gap-4 pt-6">
                 <img className="w-10 h-10 rounded-full" src={user?.userImg ? user.userImg : "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Imagem do perfil" />
                 <span className="font-bold">{user?.userName}</span>
                 <div className="w-full bg-zinc-100 flex items-center text-gray-600 px-3 py-1 rounded-full">

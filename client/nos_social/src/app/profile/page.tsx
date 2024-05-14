@@ -78,12 +78,14 @@ function Profile({ searchParams }: { searchParams: { id: string } }) {
                 {user?.id === +searchParams.id ? (
                     <span>Conheça mais do perfil.</span>
                 ) :
-                    <button className={`w-1/2 rounded-md py-2 font-semibold bg-zinc-300 hover:text-black`} onClick={() => setEditProfile(true)}>
-                        Editar perfil
-                    </button>
-                //     <button className={`w-1/2 rounded-md py-2 font-semibold bg-zinc-300 hover:text-black`}>
-                //         Deletar perfil
-                //     </button>
+                    <div className="flex flex-row gap-8">
+                        <button className={`rounded-md py-2 px-8 font-semibold bg-zinc-300 hover:text-black`} onClick={() => setEditProfile(true)}>
+                            Editar perfil
+                        </button>
+                        <button className={`rounded-md py-2 px-8 font-semibold bg-zinc-300 hover:text-black`}>
+                            Deletar perfil
+                        </button>
+                    </div>
                 }
                 {editProfile &&
                     <div className="fixed top-0 bottom-0 right-0 left-0 bg-[#00000094] z-10 flex items-center justify-center">
@@ -92,8 +94,8 @@ function Profile({ searchParams }: { searchParams: { id: string } }) {
                                 <button onClick={() => setEditProfile(false)}><FaTimesCircle className="text-red-600" /></button></header>
                             <form className="w-2/3 py-8 flex flex-col gap-8">
                                 <AuthInput newState={setUserName} htmlForAndNameAndId="userName" label="Nome de usuário:" type="text"></AuthInput>
-                                <AuthInput newState={setUserImg} htmlForAndNameAndId="userImg" label="Imagem de perfil do usuário:" type="image"></AuthInput>
-                                <AuthInput newState={setBgImg} htmlForAndNameAndId="bgImg" label="Imagem de fundo do perfil do usuário:" type="image"></AuthInput>
+                                <AuthInput newState={setUserImg} htmlForAndNameAndId="userImg" label="Imagem de perfil do usuário:" type="text"></AuthInput>
+                                <AuthInput newState={setBgImg} htmlForAndNameAndId="bgImg" label="Imagem de fundo do perfil do usuário:" type="text"></AuthInput>
                                 <button className={`w-1/2 rounded-md py-2 font-semibold bg-zinc-300 hover:text-black self-center`} onClick={(e) => { e.preventDefault(); editProfileMutation.mutate({ userName, userImg, bgImg, id: +searchParams.id }) }}>
                                     Editar perfil
                                 </button>

@@ -46,4 +46,5 @@ export interface INgo {
     pageName: string,
     imageNgo: string,
     bgImageNgo: string,
+    registeringUser: string
 }

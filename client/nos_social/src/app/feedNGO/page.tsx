@@ -50,7 +50,7 @@ function FeedNGO() {
     return (
         <main className="flex min-h-screen flex-col items-center justify-between bg-zinc-100">
             <Header />
-            <div className="w-2/6 flex flex-col gap-5 py-20">
+            <div className="mx-5 lg:w-2/6 flex flex-col gap-5 py-20">
                 <PostCreation />
                 <Feed post={postQuery.data}/>
             </div>

@@ -19,6 +19,7 @@ interface Ngo {
         pageName: string,
         imageNgo: string,
         bgImageNgo: string,
+        registeringUser: string
     } | undefined
     setNgo: (newState: any) => void;
 }

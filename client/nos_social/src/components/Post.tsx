@@ -11,16 +11,19 @@ import Link from "next/link";
 import { IPost } from "@/interfaces";
 import { ILike } from "@/interfaces";
 import { IComment } from "@/interfaces";
+import { NgoContext } from "@/context/ngoContext";
 
-function Post(props: { post: IPost }) {
+function Post(props: { post: IPost }, { searchParams }: { searchParams: { id: string } }) {
 
     const { id, profilePicture, author, description, image, createdPost, userId } = props.post;
-    const { user } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)
+    const { ngo, setNgo} = useContext(NgoContext)
     const [comment, setComment] = useState('')
     const [liked, setLiked] = useState(false)
     const [showLiked, setShowLiked] = useState(false)
     const [showComments, setShowComments] = useState(false)
-    const queryClient = useQueryClient()
+    const [editProfile, setEditProfile] = useState(false);
+    const queryClient = useQueryClient();
 
     //LIKES QUERY
 
@@ -95,6 +98,38 @@ function Post(props: { post: IPost }) {
         commentMutation.mutate({ comment, commentUserId: user?.id, postId: id });
         setComment('')
     }
+
+    const postQuery = useQuery<IPost[] | undefined>({
+        queryKey: ['posts/?id='],
+        queryFn: () =>
+            makeRequest.get("post/" + searchParams.id).then((res) => {
+                return res.data.data
+            })
+    })
+
+    if (postQuery.error) {
+        [
+            console.log(postQuery.error)
+        ]
+    }
+
+    const editProfileMutation = useMutation({
+        mutationFn: async (data: { description: string, image: string, id: number }) => {
+            return makeRequest
+                .put(`users/update-user`, data)
+                .then((res) => {
+                    if (user) {
+                        const newUser = { description: data.description, image: data.image, id: data.id, emailNgo: ngo?.emailNgo }
+                        setUser(newUser)
+                        return res.data
+                    }
+                });
+        },
+        onSuccess: () => {
+            setEditProfile(false)
+            queryClient.invalidateQueries({ queryKey: ["profile", searchParams.id] })
+        },
+    });
 
     return (
         <div className="w-full bg-white rounded-lg p-4 shadow-md">

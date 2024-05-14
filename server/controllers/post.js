@@ -29,7 +29,6 @@ export const creatPost = (req, res) => {
 };
 
 export const getPost = (req, res) => {
-
     if (req.query.id) {
         db.query(
             "SELECT p. * , u.userName, userImg FROM posts as p JOIN user as u ON (u.emailUser = p.userId) WHERE u.id = ? ORDER BY created_at DESC",

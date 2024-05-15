@@ -1,20 +1,18 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
-import { FaSearch, FaBell } from "react-icons/fa"
-import { TbMessageCircle2Filled } from "react-icons/tb"
-import { useMutation, useQueries, useQuery } from "@tanstack/react-query";
+import { useContext, useState } from "react";
+import { FaSearch } from "react-icons/fa"
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
-import { UserContext } from "@/context/userContext";
-import { IUser } from "@/interfaces";
+import { INgo } from "@/interfaces";
+import { NgoContext } from "@/context/ngoContext";
 
 function Header() {
 
-    const { user, setUser } = useContext(UserContext)
+    const { ngo, setNgo } = useContext(NgoContext)
     const [showMenu, setShowMenu] = useState(false)
     const [search, setSearch] = useState<string | null>(null)
     const router = useRouter()
-    // const isFeedUser = router.pathname === "/feedUser"; 
 
     const mutation = useMutation({
         mutationFn: async () => {
@@ -23,7 +21,7 @@ function Header() {
             });
         },
         onSuccess: () => {
-            setUser(undefined);
+            setNgo(undefined);
             localStorage.removeItem("nos-social:user");
             router.push("/loginUser");
         },
@@ -50,7 +48,7 @@ function Header() {
             </div>
             {search && (
                 <div className="absolute flex flex-col bg-white p-4 shadow-md rounded-md gap-2 border-t whitespace-nowrap right-[-8px]">
-                    {data?.map((users:IUser, id:number) => {
+                    {data?.map((users:INgo, id:number) => {
                         return (
                             <Link href="" key={id}>
                                 <img src={users.userImg ? users.userImg : "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Imagem do perfil" className="w-8 h-8 rounded-full" />

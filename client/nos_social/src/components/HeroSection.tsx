@@ -1,7 +1,7 @@
 function HeroSection() {
 
     return (
-        <section className="lg:flex p-4 lg:py-16 lg:px-72 bg-blue-800 text-white">
+        <section className="lg:flex pt-24 pb-16 px-4 lg:pt-40 lg:pb-24 lg:px-72 bg-blue-800 text-white">
             <div>
                 <h1 className="font-bold text-2xl lg:text-4xl pb-3 lg:pb-10">Bem-vindo(a) a Nós Social - São Paulo!</h1>
                 <p className="text-base lg:text-2xl pb-4 lg:pr-28">Nosso objetivo é oferecer um espaço onde as ONG possam se cadastrar e compartilhar suas atividades beneficentes com o público. Aqui, você encontrará uma variedade de projetos e iniciativas realizadas por ONGs locais, desde campanhas de arrecadação até eventos de conscientização.</p>

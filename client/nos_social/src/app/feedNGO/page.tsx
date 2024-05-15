@@ -1,7 +1,6 @@
 "use client";
 
 import Feed from "@/components/Feed";
-
 import { useRouter } from "next/navigation";
 import { makeRequest } from "../../../axios";
 import { useQuery } from "@tanstack/react-query";
@@ -30,7 +29,6 @@ function FeedNGO() {
 
     if (isError) {
         console.log(error);
-        // router.push('/loginUser')
     }
 
     const postQuery = useQuery<IPost[] | undefined>({

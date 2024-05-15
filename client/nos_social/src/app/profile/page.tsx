@@ -1,6 +1,6 @@
 'use client';
 
-import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../../axios";
 import Feed from "@/components/Feed";
 import { IPost } from "@/interfaces";

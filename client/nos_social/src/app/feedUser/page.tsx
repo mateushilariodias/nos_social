@@ -27,7 +27,6 @@ function FeedUser() {
 
     if (isError) {
         console.log(error);
-        // router.push('/loginUser')
     }
 
     const postQuery = useQuery<IPost[] | undefined>({

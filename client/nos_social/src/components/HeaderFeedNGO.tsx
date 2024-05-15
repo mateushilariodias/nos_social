@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
-import { FaSearch, FaBell } from "react-icons/fa"
-import { TbMessageCircle2Filled } from "react-icons/tb"
-import { useMutation, useQueries, useQuery } from "@tanstack/react-query";
+import { useContext, useState } from "react";
+import { FaSearch } from "react-icons/fa"
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 import { UserContext } from "@/context/userContext";
 import { IUser } from "@/interfaces";
@@ -15,8 +14,7 @@ function Header() {
     const [search, setSearch] = useState<string | null>(null)
     const [searchResults, setSearchResults] =  useState(false)
     const router = useRouter()
-    // const isFeedUser = router.pathname === "/feedUser"; 
-
+    
     const mutation = useMutation({
         mutationFn: async () => {
             return await makeRequest.post("auth/logout").then((res) => {

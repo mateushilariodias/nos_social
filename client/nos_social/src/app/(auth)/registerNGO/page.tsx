@@ -1,7 +1,6 @@
 "use client";
 
 import AuthInput from "@/components/AuthInput";
-import Link from "next/link";
 import { useState } from "react";
 import { makeRequest } from "../../../../axios";
 

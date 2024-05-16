@@ -15,7 +15,7 @@ import { NgoContext } from "@/context/ngoContext";
 
 function Post(props: { post: IPost }, { searchParams }: { searchParams: { id: string } }) {
 
-    const { id, profilePicture, author, description, image, createdPost, userId } = props.post;
+    const { id, profilePicture, author, description, image, createdPost, ngoId } = props.post;
     const { user, setUser } = useContext(UserContext)
     const { ngo, setNgo} = useContext(NgoContext)
     const [comment, setComment] = useState('')
@@ -134,7 +134,7 @@ function Post(props: { post: IPost }, { searchParams }: { searchParams: { id: st
     return (
         <div className="w-full bg-white rounded-lg p-4 shadow-md">
             <header className="flex gap-2 pb-4 border-b items-center">
-                <Link href={'/profile?id=' + userId}>
+                <Link href={'/profile?id=' + ngoId}>
                     <img className="h-8 w-8 rounded-full" src={profilePicture ? profilePicture : "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Foto de perfil do criador da postagem" />
                     <div className="flex flex-col">
                         <span className="font-semibold">{author}</span>

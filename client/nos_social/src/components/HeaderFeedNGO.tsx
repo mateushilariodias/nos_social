@@ -4,12 +4,12 @@ import { useContext, useState } from "react";
 import { FaSearch } from "react-icons/fa"
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
-import { UserContext } from "@/context/userContext";
-import { IUser } from "@/interfaces";
+import { INgo } from "@/interfaces";
+import { NgoContext } from "@/context/ngoContext";
 
 function Header() {
 
-    const { user, setUser } = useContext(UserContext)
+    const { ngo, setNgo } = useContext(NgoContext)
     const [showMenu, setShowMenu] = useState(false)
     const [search, setSearch] = useState<string | null>(null)
     const [searchResults, setSearchResults] =  useState(false)
@@ -22,7 +22,7 @@ function Header() {
             });
         },
         onSuccess: () => {
-            setUser(undefined);
+            setNgo(undefined);
             localStorage.removeItem("nos-social:user");
             router.push("/loginUser");
         },
@@ -49,11 +49,11 @@ function Header() {
             </div>
             {search && searchResults && (
                 <div className="absolute flex flex-col bg-white p-4 shadow-md rounded-md gap-2 border-t whitespace-nowrap right-0 left-0 top-[100%]">
-                    {data?.map((users:IUser, id:number) => {
+                    {data?.map((ngos:INgo, id:number) => {
                         return (
-                            <Link href={"/profile?id="+users.id} key={id} className="flex items-center gap-2" onClick={() => (setSearch(null), setSearchResults(false))}>
-                                <img src={users.userImg ? users.userImg : "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Imagem do perfil" className="w-8 h-8 rounded-full" />
-                                <span className="font-bold">{users.userName}</span>
+                            <Link href={"/profile?id="+ngos.id} key={id} className="flex items-center gap-2" onClick={() => (setSearch(null), setSearchResults(false))}>
+                                <img src={ngos.imageNgo ? ngos.imageNgo : "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Imagem do perfil" className="w-8 h-8 rounded-full" />
+                                <span className="font-bold">{ngos.pageName}</span>
                             </Link>
                         )
                     })}
@@ -71,8 +71,8 @@ function Header() {
                 </div> */}
                 <div className="relative" onMouseLeave={() => setShowMenu(false)}>
                     <button className="flex gap-2 items-center" onClick={() => setShowMenu(!showMenu)}>
-                        <img className="w-8 h-8 rounded-full" src={user ? user.userImg : "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Imagem do perfil" />
-                        <span className="font-bold">{user?.userName}</span>
+                        <img className="w-8 h-8 rounded-full" src={ngo ? ngo.imageNgo : "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Imagem do perfil" />
+                        <span className="font-bold">{ngo?.pageName}</span>
                     </button>
                     {showMenu && (
                         <div className="absolute flex flex-col bg-white p-4 shadow-md rounded-md gap-2 border-t whitespace-nowrap right-[-8px]">

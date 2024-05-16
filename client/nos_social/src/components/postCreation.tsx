@@ -1,15 +1,15 @@
 'use client'
 
-import { UserContext } from "@/context/userContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
 import { TbPhoto } from "react-icons/tb";
 import { makeRequest } from "../../axios";
+import { NgoContext } from "@/context/ngoContext";
 
 function PostCreation() {
 
-    const { user } = useContext(UserContext)
+    const { ngo } = useContext(NgoContext)
     const [description, setDescription] = useState("")
     const [imageUnification, setImageUnification] = useState("")
     const [image, setImage] = useState<File | null>(null)
@@ -49,7 +49,7 @@ function PostCreation() {
         if (image) {
             imageUrl = await upload()
         }
-        mutation.mutate({ description, image: imageUrl, userId: user?.id })
+        mutation.mutate({ description, image: imageUrl, ngoId: ngo?.id })
         setDescription('')
         setImage(null)
     }
@@ -58,8 +58,8 @@ function PostCreation() {
         <div className="mt-8 w-full bg-white rounded-lg pb-4 px-4 lg:p-4 shadow-md flex flex-col gap-3">
             {image && <img src={imageUnification} alt="Imagem da postagem" />}
             <div className="flex gap-2 lg:gap-4 pt-6">
-                <img className="w-10 h-10 rounded-full" src={user?.userImg ? user.userImg : "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Imagem do perfil" />
-                <span className="font-bold">{user?.userName}</span>
+                <img className="w-10 h-10 rounded-full" src={ngo?.imageNgo ? ngo.imageNgo : "https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="Imagem do perfil" />
+                <span className="font-bold">{ngo?.pageName}</span>
                 <div className="w-full bg-zinc-100 flex items-center text-gray-600 px-3 py-1 rounded-full">
                     <input type="text" name="comment" id="comment" placeholder={`Qual trabalho você deseja compartilhar?`} value={description} onChange={(e) => setDescription(e.target.value)} className="bg-zinc-100 w-full focus-visible:outline-none " />
                     <button onClick={() => sharePost()}>

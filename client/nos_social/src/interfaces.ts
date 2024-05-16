@@ -5,7 +5,7 @@ export interface IPost {
     description: string;
     image: string;
     createdPost: string;
-    userId: number;
+    ngoId: number;
 }
 
 export interface ILike {
@@ -42,6 +42,7 @@ export interface INgo {
     corporateReason: string,
     emailNgo: string,
     phoneNumberNgo: string,
+    physicalAddress: string,
     objectiveOfTheNgo: string,
     pageName: string,
     imageNgo: string,

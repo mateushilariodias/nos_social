@@ -6,7 +6,7 @@ interface AuthInputProps {
 }
 function AuthInput(props: AuthInputProps) {
     return (
-        <div className="flex flex-col items-start justify-between">
+        <div className="flex flex-col items-start justify-between w-full px-6 py-1">
             <label htmlFor={props.htmlForAndNameAndId}>{props.label}</label>
             <input
                 type={props.type}

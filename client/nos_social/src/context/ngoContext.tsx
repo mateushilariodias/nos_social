@@ -15,6 +15,7 @@ interface Ngo {
         corporateReason: string,
         emailNgo: string,
         phoneNumberNgo: string,
+        physicalAddress: string,
         objectiveOfTheNgo: string,
         pageName: string,
         imageNgo: string,

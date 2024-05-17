@@ -103,22 +103,22 @@ function Profile({ searchParams }: { searchParams: { id: string } }) {
                 }
                 {editProfile &&
                     <div className="fixed top-0 bottom-0 right-0 left-0 bg-[#00000094] z-10 flex items-center justify-center overflow-y-auto">
-                        <div className="bg-white w-2/3 rounded-xl flex flex-col items-center">
+                        <div className="bg-white w-11/12 lg:w-2/3 rounded-xl flex flex-col items-center overflow-y-auto max-h-full">
                             <header className="w-full border-b font-semibold text-lg text-zinc-600 flex justify-between items-center p-2">Editar perfil
                                 <button onClick={() => setEditProfile(false)}><FaTimesCircle className="text-red-600" /></button></header>
-                            <form className="w-2/3 py-8 flex flex-col gap-5">
-                                <div className="flex flex-row justify-between">
+                            <form className="w-full lg:w-2/3 py-8 flex flex-col gap-5">
+                                <div className="lg:flex lg:flex-row justify-between gap-8">
                                     <AuthInput newState={setCnpj} htmlForAndNameAndId="cnpj" label="CNPJ da ONG:" type="text"></AuthInput>
                                     <AuthInput newState={setStateRegistration} htmlForAndNameAndId="stateRegistration" label="Inscrição estadual de SP da ONG" type="text"></AuthInput>
                                     <AuthInput newState={setCorporateReason} htmlForAndNameAndId="corporateReason" label="Razão social da ONG:" type="text"></AuthInput>
                                 </div>
-                                <div className="flex flex-row justify-between">
+                                <div className="lg:flex lg:flex-row justify-between gap-8">
                                     <AuthInput newState={setEmailNgo} htmlForAndNameAndId="emailNgo" label="E-mail da ONG:" type="email"></AuthInput>
                                     <AuthInput newState={setPhoneNumberNgo} htmlForAndNameAndId="phoneNumberNgo" label="Número de telefone celular da ONG:" type="tel"></AuthInput>
                                 </div>
                                 <AuthInput newState={setPhysicalAddress} htmlForAndNameAndId="physicalAddress" label="Endereço físico da ONG:" type="text"></AuthInput>
                                 <AuthInput newState={setObjectiveOfTheNgo} htmlForAndNameAndId="objectiveOfTheNgo" label="Objetivo da ONG:" type="text"></AuthInput>
-                                <div className="flex flex-row justify-between gap-2">
+                                <div className="lg:flex lg:flex-row justify-between gap-8">
                                     <AuthInput newState={setPageName} htmlForAndNameAndId="pageName" label="Nome da página:" type="text"></AuthInput>
                                     <AuthInput newState={setImageNgo} htmlForAndNameAndId="imageNgo" label="Imagem de perfil da ONG:" type="file"></AuthInput>
                                     <AuthInput newState={setBgImageNgo} htmlForAndNameAndId="bgImageNgo" label="Imagem de fundo do perfil da ONG:" type="file"></AuthInput>

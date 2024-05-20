@@ -1,14 +1,10 @@
-// Importação do módulo Express para lidar com rotas e criar o aplicativo.
 import express from "express";
+import { getUser, updateUser } from "../controllers/users.js";
+import { checkToken } from "../middleware/tokenValidation.js";
 
-// Importação da função getUser do controlador de usuários.
-import { getUser } from "../controllers/users.js";
-
-// Criação de um objeto Router para definir rotas específicas.
 const router = express.Router();
 
-// Definição da rota "/teste" que aceita requisições GET e chama a função getUser do controlador de usuários.
 router.get("/get-user", getUser);
+router.get("/update-user", checkToken, updateUser);
 
-// Exportação do objeto Router para uso em outras partes do aplicativo.
 export default router;

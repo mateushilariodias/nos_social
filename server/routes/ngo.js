@@ -1,5 +1,10 @@
 import express from "express";
-import { getNgo } from "../controllers/ngos.js";
+import { getNgo, updateNgo } from "../controllers/ngos.js";
+import { checkToken } from "../middleware/tokenValidation.js";
+
 const router = express.Router();
-router.get("/teste", getNgo);
+
+router.get("/get-ngo", getNgo);
+router.get("/update-ngo", checkToken, updateNgo);
+
 export default router;

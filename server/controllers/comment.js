@@ -1,13 +1,13 @@
 import { db } from "../connect.js";
 
 export const creatComment = (req, res) => {
-    const { comment_desc, post_id, comment_user_id } = req.body;
-    if (!comment_desc) {
+    const { comment, postId, commentUserId } = req.body;
+    if (!comment) {
         return res
         .status(422)
         .json({ msg: "O comentário precisa ter um texto!" });
     }
-    db.query("INSERT INTO comments SET ?", { comment_desc, post_id, comment_user_id }, (error) => {
+    db.query("INSERT INTO comments SET ?", { comment, postId, commentUserId }, (error) => {
         if (error) {
             console.log(error);
             return res.status(500).json({
@@ -21,8 +21,8 @@ export const creatComment = (req, res) => {
 
 export const getComment = (req, res) => {
     db.query(
-        "SELECT c. * , u.userName, userImg FROM comments AS c JOIN user AS u ON (u.emailUser = c.comment_user_id) WHERE post_id = ? ORDER BY created_at DESC",
-        [req.query.post_id],
+        "SELECT c. * , u.userName, userImg FROM comments AS c JOIN user AS u ON (u.emailUser = c.commentUserId) WHERE postId = ? ORDER BY created_at DESC",
+        [req.query.postId],
         (error) => {
             if (error) {
                 console.log(error);

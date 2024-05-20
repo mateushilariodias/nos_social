@@ -4,17 +4,17 @@ import { db } from "../connect.js";
 // Função para criar uma nova postagem
 export const creatPost = (req, res) => {
     // Extrair os dados da requisição
-    const { post_desc, img, userId } = req.body;
+    const { description, image, ngoId } = req.body;
 
     // Verificar se a postagem contém texto ou imagem
-    if (!post_desc && !img) {
+    if (!description && !image) {
         return res
             .status(422)
             .json({ msg: "O post precisa ter um texto ou uma imagem!" });
     }
 
     // Executar uma query SQL para inserir a postagem no banco de dados
-    db.query("INSERT INTO posts SET ?", { post_desc, img, userId }, (error) => {
+    db.query("INSERT INTO posts SET ?", { description, image, ngoId }, (error) => {
         if (error) {
             // Se houver um erro, enviar uma resposta de erro ao cliente
             console.log(error);
@@ -31,7 +31,7 @@ export const creatPost = (req, res) => {
 export const getPost = (req, res) => {
     if (req.query.id) {
         db.query(
-            "SELECT p. * , u.userName, userImg FROM posts as p JOIN user as u ON (u.emailUser = p.userId) WHERE u.id = ? ORDER BY created_at DESC",
+            "SELECT p. * , u.userName, userImg FROM posts as p JOIN user as u ON (u.emailUser = p.ngoId) WHERE u.id = ? ORDER BY created_at DESC",
             [req.query.id],
             (error) => {
                 if (error) {
@@ -46,7 +46,7 @@ export const getPost = (req, res) => {
         );
     } else {
         db.query(
-            "SELECT p. * , u.userName, userImg FROM posts as p JOIN user as u ON (u.emailUser = p.userId) ORDER BY created_at DESC",
+            "SELECT p. * , u.userName, userImg FROM posts as p JOIN user as u ON (u.emailUser = p.ngoId) ORDER BY created_at DESC",
             (error) => {
                 if (error) {
                     console.log(error);

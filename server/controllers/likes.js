@@ -1,10 +1,10 @@
 import { db } from "../connect.js";
 
 export const addLikes = (req, res) => {
-    const { likes_user_id, likes_post_id } = req.body;
+    const { likeUserId, postId } = req.body;
 
     db.query("INSERT INTO likes SET ?",
-        { likes_user_id, likes_post_id },
+        { likeUserId, postId },
         (error) => {
             if (error) {
                 console.log(error);
@@ -19,10 +19,10 @@ export const addLikes = (req, res) => {
 };
 
 export const deletelikes = (req, res) => {
-    const { likes_user_id, likes_post_id } = req.query;
+    const { likeUserId, postId } = req.query;
     db.query(
-        "DELETE FROM likes WHERE `likes_user_id` = ? AND `likes_post_id` = ?",
-        [likes_user_id, likes_post_id],
+        "DELETE FROM likes WHERE `likeUserId` = ? AND `postId` = ?",
+        [likeUserId, postId],
         (error) => {
             if (error) {
                 console.log(error);
@@ -38,8 +38,8 @@ export const deletelikes = (req, res) => {
 
 export const getLikes = (req, res) => {
     db.query(
-        "SELECT l.*, u.userName FROM likes as l JOIN user as u ON (u.emailUser = l.likes_user_id) WHERE likes_post_id = ?",
-        [req.query.likes_post_id],
+        "SELECT l.*, u.userName FROM likes as l JOIN user as u ON (u.emailUser = l.likeUserId) WHERE postId = ?",
+        [req.query.postId],
         (error) => {
             if (error) {
                 console.log(error);

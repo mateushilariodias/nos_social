@@ -7,7 +7,7 @@ export const getUser = (req, res) => {
         return res.status(422).json({ msg: 'Precisamos do id do usuário' })
     };
 
-    db.query('SELECT userName, userImg, bgImg FROM user WHERE id = ?',
+    db.query('SELECT userName, userImg FROM user WHERE id = ?',
         [id],
         (error, data) => {
             if (error) {
@@ -25,14 +25,14 @@ export const getUser = (req, res) => {
 };
 
 export const updateUser = (req, res) => {
-    const { userName, userImg, bgImg, id } = req.body
+    const { userName, userImg, id } = req.body
 
     if (!userName || !userImg || !bgImg) {
         return res.status(422).json({ msg: 'Sem alterações para serem feitas!' })
     };
 
-    db.query('UPDATE user SET userName = ? userImg = ? bgImg = ? WHERE id = ?',
-        [userName, userImg, bgImg, id],
+    db.query('UPDATE user SET userName = ? userImg = ? WHERE id = ?',
+        [userName, userImg, id],
         (error, data) => {
             if (error) {
                 console.log(error)
